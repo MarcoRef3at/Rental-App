@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Rental-App",
-    "slug": "Rental-App",
+    "name": "Rental App",
+    "slug": "Rental App",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
       "image": "./app/assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#00296B"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
