@@ -1,30 +1,45 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
-import { Form, FormField, SubmitButton } from "../components/forms";
+import {
+  ErrorMessage,
+  Form,
+  FormField,
+  SubmitButton,
+} from "../components/forms";
+import authApi from "../api/auth";
+import AuthContext from "./../auth/context";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  password: Yup.string().required().min(6).label("Password"),
 });
 
 function RegisterScreen() {
+  const authContext = useContext(AuthContext);
+  const [loginFailed, setLoginFailed] = useState(false);
+
+  const handleSubmit = async ({ email, password }) => {
+    const result = await authApi.register(email, password);
+    let response = result.data["Cki"] || result.data["Error"];
+    if (response == "Mail already resigtered") return setLoginFailed(response);
+
+    setLoginFailed(false);
+    const token = result.data["Cki"];
+    authContext.setToken(token);
+    authStorage.storeToken(token);
+    // auth.logIn(result.data);
+  };
+
   return (
     <Screen style={styles.container}>
       <Form
-        initialValues={{ name: "", email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        initialValues={{ email: "", password: "" }}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        <FormField
-          autoCorrect={false}
-          icon="account"
-          name="name"
-          placeholder="Name"
-        />
         <FormField
           autoCapitalize="none"
           autoCorrect={false}
@@ -43,6 +58,7 @@ function RegisterScreen() {
           secureTextEntry
           textContentType="password"
         />
+        <ErrorMessage error={loginFailed} visible={loginFailed} />
         <SubmitButton title="Register" />
       </Form>
     </Screen>

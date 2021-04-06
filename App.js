@@ -34,8 +34,8 @@ export default function App() {
   return (
     <AuthContext.Provider value={{ token, setToken }}>
       <NavigationContainer theme={navigationTheme}>
-        {/* {token ? <AppNavigator /> : <AuthNavigator />} */}
-        {token ? <ListingEditScreen /> : <AuthNavigator />}
+        {token ? <AppNavigator /> : <AuthNavigator />}
+        {/* {token ? <ListingEditScreen /> : <AuthNavigator />} */}
       </NavigationContainer>
     </AuthContext.Provider>
   );

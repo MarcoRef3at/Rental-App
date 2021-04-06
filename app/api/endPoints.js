@@ -1,5 +1,5 @@
 export default {
-  registration: "=rgs",
+  register: "=rgs",
   login: "=lgn",
   getList: "=lst",
   addList: "=addlst",

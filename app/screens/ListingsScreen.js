@@ -29,6 +29,7 @@ function ListingsScreen({ navigation }) {
           </>
         )}
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={getListingsApi.data}
           keyExtractor={(listing) => listing.ID.toString()}
           renderItem={({ item }) => (
