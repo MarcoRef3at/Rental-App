@@ -13,6 +13,8 @@ import Screen from "../components/Screen";
 import useLocation from "../hooks/useLocation";
 import useApi from "./../hooks/useApi";
 import listingsApi from "../api/listings";
+import AppText from "./../components/Text";
+import defaultStyles from "./../config/styles";
 
 const validationSchema = Yup.object().shape({
   type: Yup.object().required().nullable().label("Type"),
@@ -56,13 +58,16 @@ function ListingEditScreen() {
         onSubmit={(values) => console.log(location)}
         validationSchema={validationSchema}
       >
+        <AppText style={defaultStyles.textHeader}>
+          Which of These Sounds most like your place?
+        </AppText>
         <Picker
           items={getTypeAndCategory.data.LstTp}
           name="type"
           numberOfColumns={1}
           // PickerItemComponent={CategoryPickerItem}
-          placeholder="Type"
-          width="50%"
+          placeholder="Choose a property type"
+          width="100%"
         />
 
         <Picker
@@ -70,8 +75,8 @@ function ListingEditScreen() {
           name="category"
           numberOfColumns={1}
           // PickerItemComponent={CategoryPickerItem}
-          placeholder="Category"
-          width="50%"
+          placeholder="Confirm the type of place you have"
+          width="100%"
         />
 
         <SubmitButton title="Next" />

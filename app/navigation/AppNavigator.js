@@ -7,6 +7,7 @@ import FeedNavigator from "./FeedNavigator";
 import ListingEditScreen from "../screens/ListingEditScreen";
 import NewListingButton from "./NewListingButton";
 import routes from "./routes";
+import ListingsNavigator from "./ListingsNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +24,7 @@ const AppNavigator = () => (
     />
     <Tab.Screen
       name="ListingEdit"
-      component={ListingEditScreen}
+      component={ListingsNavigator}
       options={({ navigation }) => ({
         tabBarButton: () => (
           <NewListingButton
