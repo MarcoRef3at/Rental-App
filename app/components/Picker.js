@@ -46,9 +46,10 @@ function AppPicker({
       </TouchableWithoutFeedback>
       <ModalOptions
         items={items}
-        setModalVisible={(value) => setModalVisible(value)}
         modalVisible={modalVisible}
+        setModalVisible={(value) => setModalVisible(value)}
         onSelectItem={(value) => onSelectItem(value)}
+        header={placeholder}
       />
     </>
   );

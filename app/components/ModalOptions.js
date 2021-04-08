@@ -3,11 +3,13 @@ import { View, StyleSheet, FlatList, Button, Text } from "react-native";
 import Modal from "react-native-modal";
 import PickerItem from "./PickerItem";
 import defaultStyles from "./../config/styles";
+import AppText from "./Text";
 const ModalOptions = ({
   setModalVisible,
   modalVisible,
   onSelectItem,
   items,
+  header = "Choose one of the following options",
   PickerItemComponent = PickerItem,
   numberOfColumns = 1,
 }) => {
@@ -21,6 +23,9 @@ const ModalOptions = ({
     >
       <View style={styles.modalView}>
         <FlatList
+          ListHeaderComponent={() => (
+            <AppText style={defaultStyles.modalHeader}>{header}</AppText>
+          )}
           data={items}
           keyExtractor={(item) => item.ID.toString()}
           numColumns={numberOfColumns}
