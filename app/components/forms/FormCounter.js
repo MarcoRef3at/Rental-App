@@ -7,12 +7,14 @@ import { useFormikContext } from "formik";
 
 const FormCounter = ({ title, type }) => {
   const { setFieldValue, values } = useFormikContext();
+  let disabled = values[type] <= 1;
   return (
     <View style={styles.container}>
       <AppText>{title}</AppText>
       <View style={styles.counter}>
         <RoundButton
           icon="minus-circle"
+          disabled={disabled}
           onPress={() =>
             setFieldValue(type, values[type] > 1 ? values[type] - 1 : 1)
           }

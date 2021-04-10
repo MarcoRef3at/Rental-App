@@ -52,6 +52,62 @@ function ListingEditScreen() {
   const location = useLocation();
   const getTypeAndCategory = useApi(listingsApi.getListTypeAndCategory);
 
+  const bedTypes = {
+    bdtp: [
+      {
+        ID: 1,
+        Nm: "Sofa bed",
+      },
+      {
+        ID: 2,
+        Nm: "Couch",
+      },
+      {
+        ID: 3,
+        Nm: "Floor mattress",
+      },
+      {
+        ID: 4,
+        Nm: "Single",
+      },
+      {
+        ID: 5,
+        Nm: "Double",
+      },
+      {
+        ID: 6,
+        Nm: "Queen",
+      },
+      {
+        ID: 7,
+        Nm: "King",
+      },
+      {
+        ID: 8,
+        Nm: "Air mattress",
+      },
+      {
+        ID: 9,
+        Nm: "Bunk bed",
+      },
+      {
+        ID: 10,
+        Nm: "Crib",
+      },
+      {
+        ID: 11,
+        Nm: "Hammock",
+      },
+      {
+        ID: 12,
+        Nm: "Water bed",
+      },
+      {
+        ID: 13,
+        Nm: "Toddler bed",
+      },
+    ],
+  };
   useEffect(() => {
     getTypeAndCategory.request();
   }, []);
@@ -64,6 +120,7 @@ function ListingEditScreen() {
           guestNumber: 1,
           bedroomNumber: 1,
           bathroomNumber: 1,
+          bedType: null,
         }}
         onSubmit={(values) => {
           console.log(values);
@@ -104,12 +161,13 @@ function ListingEditScreen() {
             type="bathroomNumber"
           />
 
+          {/* Bed Types */}
           <AppText style={defaultStyles.textHeader}>
             What kind of beds are there?
           </AppText>
           <Picker
-            items={getTypeAndCategory.data.LstTp}
-            name="type"
+            items={bedTypes.bdtp}
+            name="bedType"
             numberOfColumns={1}
             // PickerItemComponent={CategoryPickerItem}
             placeholder={typePlaceholder}

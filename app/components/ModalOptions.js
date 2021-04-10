@@ -1,9 +1,20 @@
 import React, { useState } from "react";
-import { View, StyleSheet, FlatList, Button, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Button,
+  Text,
+  ScrollView,
+} from "react-native";
 import Modal from "react-native-modal";
 import PickerItem from "./PickerItem";
 import defaultStyles from "./../config/styles";
 import AppText from "./Text";
+import Constants from "expo-constants";
+import { Dimensions } from "react-native";
+const deviceHeight = Dimensions.get("window").height;
+const deviceWidth = Dimensions.get("window").width;
 const ModalOptions = ({
   setModalVisible,
   modalVisible,
@@ -13,33 +24,49 @@ const ModalOptions = ({
   PickerItemComponent = PickerItem,
   numberOfColumns = 1,
 }) => {
+  // let itemsCount = items.length < 11 ? items.length : 10;
+  // console.log("itemsCount:", itemsCount);
   return (
     <Modal
+      propagateSwipe
       animationType="slide"
       transparent={true}
+      swipeDirection="down"
+      onSwipeComplete={(e) => {
+        setModalVisible(false);
+      }}
       visible={modalVisible}
       onBackButtonPress={() => setModalVisible(false)}
       onBackdropPress={() => setModalVisible(false)}
     >
-      <View style={styles.modalView}>
-        <FlatList
-          ListHeaderComponent={() => (
-            <AppText style={defaultStyles.modalHeader}>{header}</AppText>
-          )}
-          data={items}
-          keyExtractor={(item) => item.ID.toString()}
-          numColumns={numberOfColumns}
-          renderItem={({ item }) => (
-            <PickerItemComponent
-              item={item}
-              label={item.Nm}
-              onPress={() => {
-                setModalVisible(false);
-                onSelectItem(item);
-              }}
-            />
-          )}
-        />
+      <View
+        style={[
+          styles.modalView,
+          { maxHeight: deviceHeight - Constants.statusBarHeight - 10 },
+        ]}
+      >
+        <View style={{ flexDirection: "column" }}>
+          <AppText style={defaultStyles.modalHeader}>{header}</AppText>
+          <FlatList
+            style={{ width: deviceWidth }}
+            // ListHeaderComponent={() => (
+            //   <AppText style={defaultStyles.modalHeader}>{header}</AppText>
+            // )}
+            data={items}
+            keyExtractor={(item) => item.ID.toString()}
+            numColumns={numberOfColumns}
+            renderItem={({ item }) => (
+              <PickerItemComponent
+                item={item}
+                label={item.Nm}
+                onPress={() => {
+                  setModalVisible(false);
+                  onSelectItem(item);
+                }}
+              />
+            )}
+          />
+        </View>
       </View>
     </Modal>
   );
@@ -51,8 +78,12 @@ const styles = StyleSheet.create({
   modalView: {
     flex: 1,
     flexDirection: "row",
+    alignContent: "flex-end",
     position: "absolute",
+    width: "100%",
+    // position: "absolute",
     bottom: -20,
+
     backgroundColor: "white",
     borderColor: defaultStyles.colors.black,
     borderRadius: 20,
