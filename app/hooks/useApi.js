@@ -9,7 +9,7 @@ export default useApi = (apiFunc) => {
     setLoading(true);
     const response = await apiFunc(...args);
     setLoading(false);
-    console.log("data:", response.data);
+    // console.log("data:", response.data);
     setError(response.status != 200);
     setData(response.data);
     return response;

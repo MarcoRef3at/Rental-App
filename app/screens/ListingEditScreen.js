@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, Button, View, ScrollView } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
 import * as Yup from "yup";
 
-import {
-  Form,
-  FormField,
-  FormPicker as Picker,
-  SubmitButton,
-} from "../components/forms";
-import CategoryPickerItem from "../components/CategoryPickerItem";
+import { Form, FormPicker as Picker, SubmitButton } from "../components/forms";
 import Screen from "../components/Screen";
 import useLocation from "../hooks/useLocation";
 import useApi from "./../hooks/useApi";
 import listingsApi from "../api/listings";
 import AppText from "./../components/Text";
 import defaultStyles from "./../config/styles";
-import AppButton from "./../components/Button";
-import RoundButton from "./../components/RoundButton";
 import FormCounter from "./../components/forms/FormCounter";
 
 const validationSchema = Yup.object().shape({
@@ -28,7 +20,7 @@ const categoryPlaceholder = "Confirm the type of place you have";
 const guestNumberPlaceholder = "Number of Guests";
 const bedroomNumberPlaceholder = "Bedrooms for guests";
 const bathroomNumberPlaceholder = "Beds for guests";
-
+const bedTypesPlaceholder = "Common spaces";
 // const response = {
 //   LstTp: [
 //     {
@@ -49,23 +41,11 @@ const bathroomNumberPlaceholder = "Beds for guests";
 // };
 
 function ListingEditScreen() {
-  const location = useLocation();
+  // const location = useLocation();
   const getTypeAndCategory = useApi(listingsApi.getListTypeAndCategory);
 
   const bedTypes = {
     bdtp: [
-      {
-        ID: 1,
-        Nm: "Sofa bed",
-      },
-      {
-        ID: 2,
-        Nm: "Couch",
-      },
-      {
-        ID: 3,
-        Nm: "Floor mattress",
-      },
       {
         ID: 4,
         Nm: "Single",
@@ -76,54 +56,36 @@ function ListingEditScreen() {
       },
       {
         ID: 6,
-        Nm: "Queen",
-      },
-      {
-        ID: 7,
-        Nm: "King",
-      },
-      {
-        ID: 8,
-        Nm: "Air mattress",
-      },
-      {
-        ID: 9,
-        Nm: "Bunk bed",
-      },
-      {
-        ID: 10,
-        Nm: "Crib",
-      },
-      {
-        ID: 11,
-        Nm: "Hammock",
-      },
-      {
-        ID: 12,
-        Nm: "Water bed",
-      },
-      {
-        ID: 13,
-        Nm: "Toddler bed",
+        Nm: "Triple",
       },
     ],
   };
+  let bedTypeInit = {};
+  bedTypes[Object.keys(bedTypes)[0]].map((x) => (bedTypeInit[x.Nm] = 0));
+
   useEffect(() => {
     getTypeAndCategory.request();
   }, []);
+
+  // console.log("====================================");
+  // console.log(Object.keys(bedTypeInit)[0]);
+  // console.log(bedTypeInit[Object.keys(bedTypeInit)[0]]);
+  // console.log("====================================");
+  const initialValues = {
+    type: null,
+    category: null,
+    guestNumber: 1,
+    bedroomNumber: 1,
+    bathroomNumber: 1,
+    ...bedTypeInit,
+  };
+
   return (
     <Screen style={styles.container}>
       <Form
-        initialValues={{
-          type: null,
-          category: null,
-          guestNumber: 1,
-          bedroomNumber: 1,
-          bathroomNumber: 1,
-          bedType: null,
-        }}
+        initialValues={initialValues}
         onSubmit={(values) => {
-          console.log(values);
+          console.log("submit", values);
           // navigation.navigate(routes.MESSAGES)
         }}
         validationSchema={validationSchema}
@@ -132,10 +94,10 @@ function ListingEditScreen() {
           Which of These Sounds most like your place?
         </AppText>
         <ScrollView>
+          <FormCounter label={guestNumberPlaceholder} type="guestNumber" />
           <Picker
             items={getTypeAndCategory.data.LstTp}
             name="type"
-            numberOfColumns={1}
             // PickerItemComponent={CategoryPickerItem}
             placeholder={typePlaceholder}
             width="100%"
@@ -144,7 +106,6 @@ function ListingEditScreen() {
           <Picker
             items={getTypeAndCategory.data.LstCt}
             name="category"
-            numberOfColumns={1}
             // PickerItemComponent={CategoryPickerItem}
             placeholder={categoryPlaceholder}
             width="100%"
@@ -154,10 +115,10 @@ function ListingEditScreen() {
             How many guests can stay?
           </AppText>
 
-          <FormCounter title={guestNumberPlaceholder} type="guestNumber" />
-          <FormCounter title={bedroomNumberPlaceholder} type="bedroomNumber" />
+          <FormCounter label={guestNumberPlaceholder} type="guestNumber" />
+          <FormCounter label={bedroomNumberPlaceholder} type="bedroomNumber" />
           <FormCounter
-            title={bathroomNumberPlaceholder}
+            label={bathroomNumberPlaceholder}
             type="bathroomNumber"
           />
 
@@ -167,13 +128,16 @@ function ListingEditScreen() {
           </AppText>
           <Picker
             items={bedTypes.bdtp}
-            name="bedType"
-            numberOfColumns={1}
-            // PickerItemComponent={CategoryPickerItem}
-            placeholder={typePlaceholder}
+            name="bedType.Double"
+            PickerItemComponent={FormCounter}
+            initialValue={0}
+            placeholder={bedTypesPlaceholder}
             width="100%"
           />
+
+          <View style={{ margin: 50, borderColor: "red" }} />
         </ScrollView>
+
         <SubmitButton
           style={{
             position: "absolute",
@@ -184,7 +148,6 @@ function ListingEditScreen() {
           title="Next"
         />
       </Form>
-      {/* <View style={{ margin: 35, borderColor: "red" }} /> */}
     </Screen>
   );
 }

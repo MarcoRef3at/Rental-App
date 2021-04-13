@@ -23,6 +23,7 @@ const ModalOptions = ({
   header = "Choose one of the following options",
   PickerItemComponent = PickerItem,
   numberOfColumns = 1,
+  initialValue,
 }) => {
   // let itemsCount = items.length < 11 ? items.length : 10;
   // console.log("itemsCount:", itemsCount);
@@ -48,7 +49,8 @@ const ModalOptions = ({
         <View style={{ flexDirection: "column" }}>
           <AppText style={defaultStyles.modalHeader}>{header}</AppText>
           <FlatList
-            style={{ width: deviceWidth }}
+            showsVerticalScrollIndicator={false}
+            style={{ width: deviceWidth - 50 }}
             // ListHeaderComponent={() => (
             //   <AppText style={defaultStyles.modalHeader}>{header}</AppText>
             // )}
@@ -58,6 +60,7 @@ const ModalOptions = ({
             renderItem={({ item }) => (
               <PickerItemComponent
                 item={item}
+                initialValue={initialValue}
                 label={item.Nm}
                 onPress={() => {
                   setModalVisible(false);
@@ -76,9 +79,8 @@ export default ModalOptions;
 
 const styles = StyleSheet.create({
   modalView: {
-    flex: 1,
     flexDirection: "row",
-    alignContent: "flex-end",
+    // alignContent: "flex-end",
     position: "absolute",
     width: "100%",
     // position: "absolute",

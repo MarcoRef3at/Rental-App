@@ -12,13 +12,13 @@ function AppPicker({
   items,
   numberOfColumns = 1,
   onSelectItem,
-  PickerItemComponent = PickerItem,
+  PickerItemComponent,
   placeholder,
   selectedItem,
   width = "100%",
+  initialValue,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
-
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
@@ -44,12 +44,15 @@ function AppPicker({
           />
         </View>
       </TouchableWithoutFeedback>
+
       <ModalOptions
         items={items}
         modalVisible={modalVisible}
         setModalVisible={(value) => setModalVisible(value)}
         onSelectItem={(value) => onSelectItem(value)}
+        initialValue={initialValue}
         header={placeholder}
+        PickerItemComponent={PickerItemComponent}
       />
     </>
   );
