@@ -38,8 +38,8 @@ function AccountScreen({ navigation }) {
     <Screen style={styles.screen}>
       <View style={styles.container}>
         <ListItem
-          title="Mosh Hamedani"
-          subTitle="programmingwithmosh@gmail.com"
+          title="Marco Refaat"
+          subTitle="marco.refaat@elgouna.com"
           image={require("../assets/mosh.jpg")}
         />
       </View>

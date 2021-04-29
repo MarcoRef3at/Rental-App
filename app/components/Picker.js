@@ -17,6 +17,7 @@ function AppPicker({
   selectedItem,
   width = "100%",
   initialValue,
+  onChange,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
@@ -37,11 +38,11 @@ function AppPicker({
             <Text style={styles.placeholder}>{placeholder}</Text>
           )}
 
-          <MaterialCommunityIcons
+          {/* <MaterialCommunityIcons
             name="chevron-down"
             size={20}
             color={defaultStyles.colors.medium}
-          />
+          /> */}
         </View>
       </TouchableWithoutFeedback>
 
@@ -53,6 +54,7 @@ function AppPicker({
         initialValue={initialValue}
         header={placeholder}
         PickerItemComponent={PickerItemComponent}
+        onChange={onChange}
       />
     </>
   );

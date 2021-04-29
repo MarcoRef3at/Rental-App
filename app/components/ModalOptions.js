@@ -13,6 +13,7 @@ import defaultStyles from "./../config/styles";
 import AppText from "./Text";
 import Constants from "expo-constants";
 import { Dimensions } from "react-native";
+import { useFormikContext } from "formik";
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 const ModalOptions = ({
@@ -24,9 +25,16 @@ const ModalOptions = ({
   PickerItemComponent = PickerItem,
   numberOfColumns = 1,
   initialValue,
+  onChange,
 }) => {
   // let itemsCount = items.length < 11 ? items.length : 10;
   // console.log("itemsCount:", itemsCount);
+  const { values } = useFormikContext();
+  const hideModal = () => {
+    setModalVisible(false);
+    console.log("values:", onChange);
+    onChange(values);
+  };
   return (
     <Modal
       propagateSwipe
@@ -34,11 +42,11 @@ const ModalOptions = ({
       transparent={true}
       swipeDirection="down"
       onSwipeComplete={(e) => {
-        setModalVisible(false);
+        hideModal();
       }}
       visible={modalVisible}
-      onBackButtonPress={() => setModalVisible(false)}
-      onBackdropPress={() => setModalVisible(false)}
+      onBackButtonPress={() => hideModal()}
+      onBackdropPress={() => hideModal()}
     >
       <View
         style={[
@@ -63,7 +71,7 @@ const ModalOptions = ({
                 initialValue={initialValue}
                 label={item.Nm}
                 onPress={() => {
-                  setModalVisible(false);
+                  hideModal();
                   onSelectItem(item);
                 }}
               />

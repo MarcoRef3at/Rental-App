@@ -1,26 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import * as Yup from "yup";
 
 import { Form, FormPicker as Picker, SubmitButton } from "../components/forms";
-import Screen from "../components/Screen";
-import useLocation from "../hooks/useLocation";
-import useApi from "./../hooks/useApi";
-import listingsApi from "../api/listings";
-import AppText from "./../components/Text";
 import defaultStyles from "./../config/styles";
 import FormCounter from "./../components/forms/FormCounter";
+import listingsApi from "../api/listings";
+import routes from "../navigation/routes";
+import Screen from "../components/Screen";
+import useApi from "./../hooks/useApi";
+import AppText from "./../components/Text";
 
 const validationSchema = Yup.object().shape({
-  type: Yup.object().required().nullable().label("Type"),
-  category: Yup.object().required().nullable().label("Category"),
+  // type: Yup.object().required().nullable().label("Type"),
+  // category: Yup.object().required().nullable().label("Category"),
 });
-const typePlaceholder = "Choose a property type";
+const bathroomNumberPlaceholder = "Bathrooms for guests";
+const bedroomNumberPlaceholder = "Bedrooms for guests";
+const bedTypesPlaceholder = "Common spaces";
 const categoryPlaceholder = "Confirm the type of place you have";
 const guestNumberPlaceholder = "Number of Guests";
-const bedroomNumberPlaceholder = "Bedrooms for guests";
-const bathroomNumberPlaceholder = "Beds for guests";
-const bedTypesPlaceholder = "Common spaces";
+const typePlaceholder = "Choose a property type";
+
 // const response = {
 //   LstTp: [
 //     {
@@ -40,8 +41,7 @@ const bedTypesPlaceholder = "Common spaces";
 //   ],
 // };
 
-function ListingEditScreen() {
-  // const location = useLocation();
+function ListingEditScreen({ navigation }) {
   const getTypeAndCategory = useApi(listingsApi.getListTypeAndCategory);
 
   const bedTypes = {
@@ -60,17 +60,15 @@ function ListingEditScreen() {
       },
     ],
   };
+
   let bedTypeInit = {};
+
   bedTypes[Object.keys(bedTypes)[0]].map((x) => (bedTypeInit[x.Nm] = 0));
 
   useEffect(() => {
     getTypeAndCategory.request();
   }, []);
 
-  // console.log("====================================");
-  // console.log(Object.keys(bedTypeInit)[0]);
-  // console.log(bedTypeInit[Object.keys(bedTypeInit)[0]]);
-  // console.log("====================================");
   const initialValues = {
     type: null,
     category: null,
@@ -80,20 +78,25 @@ function ListingEditScreen() {
     ...bedTypeInit,
   };
 
+  const [formValues, setFormValues] = useState(initialValues);
+
+  const belongsToBedTypes = (name) =>
+    Object.keys(bedTypeInit).find((element) => element == name);
+
   return (
     <Screen style={styles.container}>
       <Form
         initialValues={initialValues}
         onSubmit={(values) => {
           console.log("submit", values);
-          // navigation.navigate(routes.MESSAGES)
+          navigation.navigate(routes.LOCATION);
         }}
         validationSchema={validationSchema}
       >
         <AppText style={defaultStyles.textHeader}>
           Which of These Sounds most like your place?
         </AppText>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <FormCounter label={guestNumberPlaceholder} type="guestNumber" />
           <Picker
             items={getTypeAndCategory.data.LstTp}
@@ -101,6 +104,9 @@ function ListingEditScreen() {
             // PickerItemComponent={CategoryPickerItem}
             placeholder={typePlaceholder}
             width="100%"
+            onChange={(values) => {
+              setFormValues(values);
+            }}
           />
 
           <Picker
@@ -109,6 +115,9 @@ function ListingEditScreen() {
             // PickerItemComponent={CategoryPickerItem}
             placeholder={categoryPlaceholder}
             width="100%"
+            onChange={(values) => {
+              setFormValues(values);
+            }}
           />
 
           <AppText style={defaultStyles.textHeader}>
@@ -133,20 +142,27 @@ function ListingEditScreen() {
             initialValue={0}
             placeholder={bedTypesPlaceholder}
             width="100%"
+            onChange={(values) => {
+              setFormValues(values);
+            }}
           />
+
+          {Object.keys(formValues).map((name) => {
+            if (belongsToBedTypes(name) != undefined) {
+              return (
+                formValues[name] != 0 && (
+                  <AppText style={styles.bedTypes}>
+                    {belongsToBedTypes(name)} : {formValues[name]}
+                  </AppText>
+                )
+              );
+            }
+          })}
 
           <View style={{ margin: 50, borderColor: "red" }} />
         </ScrollView>
 
-        <SubmitButton
-          style={{
-            position: "absolute",
-            bottom: 0,
-            right: 0,
-            width: "30%",
-          }}
-          title="Next"
-        />
+        <SubmitButton style={defaultStyles.submitButton} title="Next" />
       </Form>
     </Screen>
   );
@@ -155,6 +171,16 @@ function ListingEditScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  bedTypes: {
+    flexDirection: "column",
+    marginVertical: 10,
+  },
+  submitButton: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    width: "30%",
   },
 });
 export default ListingEditScreen;
