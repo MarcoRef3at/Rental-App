@@ -3,18 +3,22 @@ import { StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import MapView, { PROVIDER_GOOGLE, Marker, Animated } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
 import AppButton from "./Button";
-
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import config from "../config";
+import AppTextInput from "./TextInput";
+import AppMapView from "./MapView";
+import MapSearch from "./MapSearch";
 const Map = ({
   modalVisible,
   setModalVisible,
   setLocation,
   currentLocation,
 }) => {
+  const delta = { latitudeDelta: 0.00922, longitudeDelta: 0.00421 };
   const initialRegion = {
     latitude: 27.3971588,
     longitude: 33.6747813,
-    latitudeDelta: 0.00922,
-    longitudeDelta: 0.00421,
+    ...delta,
   };
 
   const [marker, setMarker] = useState(null);
@@ -34,31 +38,14 @@ const Map = ({
       onBackButtonPress={() => hideModal()}
       onBackdropPress={() => hideModal()}
     >
-      <Animated
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
+      <MapSearch setRegion={(value) => setRegion(value)} />
+
+      <AppMapView
         region={region}
-        // initialRegion={currentLocation}
-        onRegionChangeComplete={(region) => {
-          setRegion(region);
-          console.log("region:", region);
-        }}
-        onPress={(e) => setMarker(e.nativeEvent.coordinate)}
-        showsUserLocation={true}
-        followsUserLocation={true}
-        showsMyLocationButton={true}
-      >
-        {marker != null && <Marker coordinate={marker} />}
-      </Animated>
-      <AppButton
-        style={styles.currentLocation}
-        title="current location"
-        onPress={() => {
-          setMarker(currentLocation);
-          //   todo:change map view on press
-          setRegion({ ...region, currentLocation });
-        }}
+        setRegion={(value) => setRegion(value)}
+        setMarker={(value) => setMarker(value)}
       />
+
       <AppButton
         style={styles.save}
         title="Save"

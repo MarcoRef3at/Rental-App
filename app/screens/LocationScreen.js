@@ -31,6 +31,7 @@ const LocationScreen = () => {
         response.data.results[0].address_components.map((address) => {
           const route = address.types.find((element) => element == "route");
           route != undefined && setStreet(address.long_name);
+
           const city = address.types.find(
             (element) => element == "administrative_area_level_2"
           );
@@ -40,6 +41,7 @@ const LocationScreen = () => {
             (element) => element == "administrative_area_level_1"
           );
           state != undefined && setState(address.long_name);
+
           const country = address.types.find((element) => element == "country");
           country != undefined && setCountry(address.long_name);
         });
@@ -49,12 +51,6 @@ const LocationScreen = () => {
           );
           region != undefined && setRegion(address.long_name);
         });
-
-        console.log("country:", country);
-        console.log("state:", state);
-        console.log("city:", city);
-        console.log("region:", region);
-        console.log("street:", street);
       })
       .catch((error) => {
         console.log("error:", error);
