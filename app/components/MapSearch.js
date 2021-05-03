@@ -1,10 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+// import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { GooglePlacesAutocomplete } from "./maps/react-native-google-places-autocomplete/GooglePlacesAutocomplete";
+
 import config from "../config";
 import AppTextInput from "./TextInput";
 
-const MapSearch = ({ setRegion }) => {
+const MapSearch = ({ setRegion, region }) => {
   return (
     <GooglePlacesAutocomplete
       placeholder="Search"
@@ -22,7 +24,7 @@ const MapSearch = ({ setRegion }) => {
       query={{
         key: config.googleMapsKey,
         language: "en",
-        components: "country:eg",
+        components: `country:${config.googlePlacesSearchArea}`,
       }}
       textInputProps={{
         InputComp: AppTextInput,

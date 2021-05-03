@@ -30,7 +30,7 @@ const Map = ({
 
   return (
     <Modal
-      style={{ margin: 0 }}
+      style={styles.container}
       propagateSwipe
       animationType="slide"
       transparent={false}
@@ -38,14 +38,33 @@ const Map = ({
       onBackButtonPress={() => hideModal()}
       onBackdropPress={() => hideModal()}
     >
-      <MapSearch setRegion={(value) => setRegion(value)} />
-
-      <AppMapView
+      {/* <AppMapView
+        style={styles.map}
         region={region}
+        marker={marker}
         setRegion={(value) => setRegion(value)}
         setMarker={(value) => setMarker(value)}
-      />
+      /> */}
 
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        region={region}
+        onRegionChangeComplete={(reg) => {
+          setRegion(reg);
+        }}
+        onPress={(e) => setMarker(e.nativeEvent.coordinate)}
+        showsUserLocation
+        showsMyLocationButton
+        followsUserLocation={false}
+      >
+        {marker && <Marker coordinate={marker} />}
+      </MapView>
+      <MapSearch
+        setRegion={(value) => setRegion(value)}
+        region={region}
+        style={styles.search}
+      />
       <AppButton
         style={styles.save}
         title="Save"
@@ -61,22 +80,26 @@ const Map = ({
 export default Map;
 
 const styles = StyleSheet.create({
-  map: {
+  container: {
+    margin: 0,
+    backgroundColor: "yellow",
     flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+  map: {
+    // flex: 1,
+    height: "100%",
     width: "100%",
-
-    // ...StyleSheet.absoluteFillObject,
+    // position: "absolute",
+    borderWidth: 20,
   },
+  search: {},
   save: {
-    position: "absolute",
-    bottom: 0,
-    right: 0,
-    // width: "30%",
-  },
-  currentLocation: {
-    position: "absolute",
-    bottom: 70,
-    right: 0,
-    width: "30%",
+    // position: "absolute",
+    // bottom: 0,
+    alignContent: "flex-end",
+    // alignItems: "flex-end",
+    alignSelf: "flex-end",
   },
 });
