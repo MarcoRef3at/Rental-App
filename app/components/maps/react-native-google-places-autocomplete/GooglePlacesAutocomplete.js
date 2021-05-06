@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import debounce from 'lodash.debounce';
 import PropTypes from 'prop-types';
+
 import Qs from 'qs';
 import React, {
   forwardRef,
@@ -23,13 +24,18 @@ import {
   View,
 } from 'react-native';
 
+import { Dimensions } from "react-native";
+const deviceWidth = Dimensions.get("window").width;
+
 const defaultStyles = {
   container: {
     // flex: 1,
-    backgroundColor: 'rgba(52, 52, 52, 0)',
-    width:'90%',
-    alignSelf:'center'
-    // borderRadius: 25,
+    position:'absolute',
+    top:0,
+    // backgroundColor: 'white',
+    // backgroundColor: 'rgba(52, 52, 52, 0)',
+    width: deviceWidth -10,
+    alignSelf:'center',
     // flexDirection: "row",
     // padding: 15,
     // marginVertical: 10,
@@ -50,7 +56,7 @@ const defaultStyles = {
   },
   listView: {},
   row: {
-    backgroundColor: 'rgba(52, 52, 52, 0)',
+    backgroundColor: 'white',
     padding: 13,
     minHeight: 44,
     flexDirection: 'row',

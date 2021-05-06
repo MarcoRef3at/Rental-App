@@ -8,6 +8,7 @@ import config from "../config";
 import AppTextInput from "./TextInput";
 import AppMapView from "./MapView";
 import MapSearch from "./MapSearch";
+import RoundButton from "./RoundButton";
 const Map = ({
   modalVisible,
   setModalVisible,
@@ -23,9 +24,23 @@ const Map = ({
 
   const [marker, setMarker] = useState(null);
   const [region, setRegion] = useState(initialRegion);
-
+  const [mapView, setmapView] = useState(null);
   const hideModal = () => {
     setModalVisible(false);
+  };
+
+  const onRelocate = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      let region = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      };
+
+      mapView.animateToRegion({
+        ...region,
+        ...delta,
+      });
+    });
   };
 
   return (
@@ -44,9 +59,13 @@ const Map = ({
         marker={marker}
         setRegion={(value) => setRegion(value)}
         setMarker={(value) => setMarker(value)}
+        setmapView={(value) => setmapView(value)}
       /> */}
 
       <MapView
+        ref={(ref) => {
+          setmapView(ref);
+        }}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         region={region}
@@ -55,7 +74,7 @@ const Map = ({
         }}
         onPress={(e) => setMarker(e.nativeEvent.coordinate)}
         showsUserLocation
-        showsMyLocationButton
+        showsMyLocationButton={false}
         followsUserLocation={false}
       >
         {marker && <Marker coordinate={marker} />}
@@ -65,6 +84,18 @@ const Map = ({
         region={region}
         style={styles.search}
       />
+
+      <View style={styles.currentLocation}>
+        <RoundButton
+          icon="my-location"
+          family="MaterialIcons"
+          onPress={() => {
+            setMarker(currentLocation);
+            onRelocate();
+          }}
+        />
+      </View>
+
       <AppButton
         style={styles.save}
         title="Save"
@@ -81,25 +112,41 @@ export default Map;
 
 const styles = StyleSheet.create({
   container: {
+    ...StyleSheet.absoluteFillObject,
     margin: 0,
-    backgroundColor: "yellow",
+    // backgroundColor: "yellow",
+    // borderColor: "red",
+    // borderWidth: 20,
+
     flex: 1,
-    flexDirection: "column",
-    alignItems: "flex-start",
   },
   map: {
-    // flex: 1,
-    height: "100%",
+    flex: 1,
     width: "100%",
-    // position: "absolute",
-    borderWidth: 20,
+    height: "100%",
+    alignSelf: "center",
+    position: "absolute",
+    ...StyleSheet.absoluteFillObject,
   },
-  search: {},
+  search: {
+    flex: 1,
+    width: 100,
+    height: 100,
+    alignSelf: "center",
+    position: "absolute",
+    top: 0,
+  },
   save: {
-    // position: "absolute",
-    // bottom: 0,
-    alignContent: "flex-end",
-    // alignItems: "flex-end",
-    alignSelf: "flex-end",
+    flex: 1,
+    alignSelf: "center",
+    position: "absolute",
+    bottom: 0,
+    paddingHorizontal: 10,
+  },
+  currentLocation: {
+    position: "absolute",
+    bottom: 70,
+    right: 0,
+    padding: 10,
   },
 });

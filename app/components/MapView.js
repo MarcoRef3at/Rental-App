@@ -2,9 +2,12 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Animated } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
 
-const AppMapView = ({ region, marker, setRegion, setMarker }) => {
+const AppMapView = ({ region, marker, setRegion, setMarker, setmapView }) => {
   return (
     <MapView
+      ref={(ref) => {
+        setmapView(ref);
+      }}
       provider={PROVIDER_GOOGLE}
       style={styles.map}
       region={region}
@@ -13,7 +16,7 @@ const AppMapView = ({ region, marker, setRegion, setMarker }) => {
       }}
       onPress={(e) => setMarker(e.nativeEvent.coordinate)}
       showsUserLocation
-      showsMyLocationButton
+      showsMyLocationButton={false}
       followsUserLocation={false}
     >
       {marker && <Marker coordinate={marker} />}
