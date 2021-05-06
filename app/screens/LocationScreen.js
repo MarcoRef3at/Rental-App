@@ -10,13 +10,19 @@ import Map from "./../components/Map";
 import AppText from "../components/Text";
 import defaultStyles from "./../config/styles";
 import SubmitButton from "./../components/forms/SubmitButton";
+import FormField from "./../components/form/FormField";
+import ErrorMessage from "./../components/forms/ErrorMessage";
 
 const LocationScreen = () => {
-  const [country, setCountry] = useState();
-  const [state, setState] = useState();
-  const [city, setCity] = useState();
-  const [region, setRegion] = useState();
-  const [street, setStreet] = useState();
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [region, setRegion] = useState("");
+  const [street, setStreet] = useState("");
+  const [hasError, setHasError] = useState(false);
+
+  const requiredFieldError = "This Field Is Required";
+
   const location = useLocation();
   const setLocation = (markedLocation) => {
     geoLocationClient
@@ -72,35 +78,39 @@ const LocationScreen = () => {
         onPress={() => setModalVisible(true)}
       />
 
-      <AppTextInput
+      <FormField
         value={street}
         placeholder={"Street"}
-        onChangeText={(value) => setStreet(value)}
-        width={300}
+        setValue={(value) => setStreet(value)}
+        error={requiredFieldError}
+        setHasError={(value) => setHasError(value)}
       />
-      <AppTextInput
+      <FormField
         value={region}
-        placeholder={"Region"}
-        onChangeText={(value) => setRegion(value)}
-        width={300}
+        placeholder={"Region (Optional)"}
+        setValue={(value) => setRegion(value)}
+        setHasError={(value) => setHasError(false)}
       />
-      <AppTextInput
+      <FormField
         value={city}
         placeholder={"City"}
-        onChangeText={(value) => setCity(value)}
-        width={300}
+        setValue={(value) => setCity(value)}
+        error={requiredFieldError}
+        setHasError={(value) => setHasError(value)}
       />
-      <AppTextInput
+      <FormField
         value={state}
         placeholder={"State"}
-        onChangeText={(value) => setState(value)}
-        width={300}
+        setValue={(value) => setState(value)}
+        error={requiredFieldError}
+        setHasError={(value) => setHasError(value)}
       />
-      <AppTextInput
+      <FormField
         value={country}
         placeholder={"Country"}
-        onChangeText={(value) => setCountry(value)}
-        width={300}
+        setValue={(value) => setCountry(value)}
+        error={requiredFieldError}
+        setHasError={(value) => setHasError(value)}
       />
 
       <Map
@@ -109,7 +119,11 @@ const LocationScreen = () => {
         setLocation={(value) => setLocation(value)}
         currentLocation={location}
       />
-      <AppButton style={defaultStyles.submitButton} title="Next" />
+      <AppButton
+        style={defaultStyles.submitButton}
+        title="Next"
+        onPress={() => console.log("submit", hasError)}
+      />
     </Screen>
   );
 };
