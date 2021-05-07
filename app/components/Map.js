@@ -3,24 +3,18 @@ import { StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import MapView, { PROVIDER_GOOGLE, Marker, Animated } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
 import AppButton from "./Button";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import config from "../config";
-import AppTextInput from "./TextInput";
-import AppMapView from "./MapView";
 import MapSearch from "./MapSearch";
 import RoundButton from "./RoundButton";
-const Map = ({
-  modalVisible,
-  setModalVisible,
-  setLocation,
-  currentLocation,
-}) => {
+import useLocation from "./../hooks/useLocation";
+import AppMapView from "./MapView";
+const Map = ({ modalVisible, setModalVisible, setLocation }) => {
   const delta = { latitudeDelta: 0.00922, longitudeDelta: 0.00421 };
   const initialRegion = {
     latitude: 27.3971588,
     longitude: 33.6747813,
     ...delta,
   };
+  const currentLocation = useLocation();
 
   const [marker, setMarker] = useState(null);
   const [region, setRegion] = useState(initialRegion);
@@ -29,18 +23,13 @@ const Map = ({
     setModalVisible(false);
   };
 
-  const onRelocate = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      let region = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      };
-
-      mapView.animateToRegion({
-        ...region,
-        ...delta,
-      });
+  const relocate = () => {
+    mapView.animateToRegion({
+      ...region,
+      latitude: currentLocation.latitude,
+      longitude: currentLocation.longitude,
     });
+    setMarker(currentLocation);
   };
 
   return (
@@ -90,8 +79,7 @@ const Map = ({
           icon="my-location"
           family="MaterialIcons"
           onPress={() => {
-            setMarker(currentLocation);
-            onRelocate();
+            relocate();
           }}
         />
       </View>
@@ -137,7 +125,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   save: {
-    flex: 1,
+    // flex: 1,
     alignSelf: "center",
     position: "absolute",
     bottom: 0,

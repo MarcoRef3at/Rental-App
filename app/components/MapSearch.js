@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 // import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GooglePlacesAutocomplete } from "./maps/react-native-google-places-autocomplete/GooglePlacesAutocomplete";
 
@@ -38,5 +37,3 @@ const MapSearch = ({ setRegion, region }) => {
 };
 
 export default MapSearch;
-
-const styles = StyleSheet.create({});

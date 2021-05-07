@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import useLocation from "./../hooks/useLocation";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+// import useLocation from "./../hooks/useLocation";
 import AppButton from "./../components/Button";
 import { geoLocationClient } from "./../api/client";
 import Screen from "./../components/Screen";
-import { Form } from "../components/forms";
-import AppTextInput from "./../components/TextInput";
 import Map from "./../components/Map";
 import AppText from "../components/Text";
 import defaultStyles from "./../config/styles";
-import SubmitButton from "./../components/forms/SubmitButton";
+
 import FormField from "./../components/form/FormField";
-import ErrorMessage from "./../components/forms/ErrorMessage";
 
 const LocationScreen = () => {
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
-  const [region, setRegion] = useState("");
-  const [street, setStreet] = useState("");
+  const [country, setCountry] = useState(null);
+  const [state, setState] = useState(null);
+  const [city, setCity] = useState(null);
+  const [region, setRegion] = useState(null);
+  const [street, setStreet] = useState(null);
   const [hasError, setHasError] = useState(false);
 
   const requiredFieldError = "This Field Is Required";
 
-  const location = useLocation();
+  // const location = useLocation();
   const setLocation = (markedLocation) => {
     geoLocationClient
       .get("/geocode/json", {
@@ -62,7 +59,23 @@ const LocationScreen = () => {
         console.log("error:", error);
       });
   };
+
   const [modalVisible, setModalVisible] = useState(false);
+
+  const validation = () => {
+    country == null && setCountry("");
+    city == null && setCity("");
+    state == null && setState("");
+    street == null && setStreet("");
+
+    if (country == "" || city == "" || street == "" || state == "") {
+      setHasError(true);
+    } else {
+      setHasError(false);
+    }
+    console.log("hasError:", hasError);
+  };
+
   return (
     <Screen style={styles.container}>
       <AppText style={defaultStyles.textHeader}>
@@ -78,52 +91,55 @@ const LocationScreen = () => {
         onPress={() => setModalVisible(true)}
       />
 
-      <FormField
-        value={street}
-        placeholder={"Street"}
-        setValue={(value) => setStreet(value)}
-        error={requiredFieldError}
-        setHasError={(value) => setHasError(value)}
-      />
-      <FormField
-        value={region}
-        placeholder={"Region (Optional)"}
-        setValue={(value) => setRegion(value)}
-        setHasError={(value) => setHasError(false)}
-      />
-      <FormField
-        value={city}
-        placeholder={"City"}
-        setValue={(value) => setCity(value)}
-        error={requiredFieldError}
-        setHasError={(value) => setHasError(value)}
-      />
-      <FormField
-        value={state}
-        placeholder={"State"}
-        setValue={(value) => setState(value)}
-        error={requiredFieldError}
-        setHasError={(value) => setHasError(value)}
-      />
-      <FormField
-        value={country}
-        placeholder={"Country"}
-        setValue={(value) => setCountry(value)}
-        error={requiredFieldError}
-        setHasError={(value) => setHasError(value)}
-      />
-
-      <Map
-        modalVisible={modalVisible}
-        setModalVisible={(value) => setModalVisible(value)}
-        setLocation={(value) => setLocation(value)}
-        currentLocation={location}
-      />
-      <AppButton
-        style={defaultStyles.submitButton}
-        title="Next"
-        onPress={() => console.log("submit", hasError)}
-      />
+      <ScrollView
+        keyboardDismissMode="interactive"
+        style={{
+          flex: 1,
+        }}
+      >
+        <FormField
+          value={street}
+          placeholder={"Street"}
+          setValue={(value) => setStreet(value)}
+          error={street == "" ? requiredFieldError : null}
+        />
+        <FormField
+          value={region}
+          placeholder={"Region (Optional)"}
+          setValue={(value) => setRegion(value)}
+        />
+        <FormField
+          value={city}
+          placeholder={"City"}
+          setValue={(value) => setCity(value)}
+          error={city == "" ? requiredFieldError : null}
+        />
+        <FormField
+          value={state}
+          placeholder={"State"}
+          setValue={(value) => setState(value)}
+          error={state == "" ? requiredFieldError : null}
+        />
+        <FormField
+          value={country}
+          placeholder={"Country"}
+          setValue={(value) => setCountry(value)}
+          error={country == "" ? requiredFieldError : null}
+        />
+        <Map
+          modalVisible={modalVisible}
+          setModalVisible={(value) => setModalVisible(value)}
+          setLocation={(value) => setLocation(value)}
+          // currentLocation={location}
+        />
+        <AppButton
+          style={defaultStyles.submitButton}
+          title="Next"
+          onPress={() => {
+            validation();
+          }}
+        />
+      </ScrollView>
     </Screen>
   );
 };
