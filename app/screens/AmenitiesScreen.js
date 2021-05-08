@@ -9,6 +9,7 @@ import MapModal from "../components/MapModal";
 import Screen from "./../components/Screen";
 import useGoogleLocation from "./../hooks/useGoogleLocation";
 import routes from "../navigation/routes";
+import FormChecker from "./../components/form/FormChecker";
 const AmenitiesScreen = () => {
   let aminities = [
     "Wifi",
@@ -27,13 +28,16 @@ const AmenitiesScreen = () => {
       <AppText style={defaultStyles.text}>
         You'll be able to add more amenities after you publish your listing.
       </AppText>
-
+      {aminities.map((x) => (
+        <FormChecker label={x} />
+      ))}
+      <FormChecker label={"label"} />
       <AppButton
         style={defaultStyles.submitButton}
         title="Next"
         onPress={() => {
-          submitForm();
-          navigation.navigate(routes.AMENITIES);
+          // submitForm();
+          // navigation.navigate(routes.AMENITIES);
         }}
       />
     </Screen>
