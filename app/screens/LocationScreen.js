@@ -11,64 +11,26 @@ import defaultStyles from "./../config/styles";
 import FormField from "./../components/form/FormField";
 
 const LocationScreen = () => {
-  const [country, setCountry] = useState(null);
-  const [state, setState] = useState(null);
-  const [city, setCity] = useState(null);
-  const [region, setRegion] = useState(null);
-  const [street, setStreet] = useState(null);
+  const geoLocation = useGoogleLocation();
+
   const [hasError, setHasError] = useState(false);
 
   const requiredFieldError = "This Field Is Required";
 
-  // const location = useLocation();
-  const setLocation = (markedLocation) => {
-    geoLocationClient
-      .get("/geocode/json", {
-        params: {
-          // latlng: `27.3971588,33.6747813`,
-          latlng: `${markedLocation.latitude},${markedLocation.longitude}`,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        response.data.results[0].address_components.map((address) => {
-          const route = address.types.find((element) => element == "route");
-          route != undefined && setStreet(address.long_name);
-
-          const city = address.types.find(
-            (element) => element == "administrative_area_level_2"
-          );
-          city != undefined && setCity(address.long_name);
-
-          const state = address.types.find(
-            (element) => element == "administrative_area_level_1"
-          );
-          state != undefined && setState(address.long_name);
-
-          const country = address.types.find((element) => element == "country");
-          country != undefined && setCountry(address.long_name);
-        });
-        response.data.results[1].address_components.map((address) => {
-          const region = address.types.find(
-            (element) => element == "neighborhood"
-          );
-          region != undefined && setRegion(address.long_name);
-        });
-      })
-      .catch((error) => {
-        console.log("error:", error);
-      });
-  };
-
   const [modalVisible, setModalVisible] = useState(false);
 
   const validation = () => {
-    country == null && setCountry("");
-    city == null && setCity("");
-    state == null && setState("");
-    street == null && setStreet("");
+    geoLocation.country == null && geoLocation.setCountry("");
+    geoLocation.city == null && geoLocation.setCity("");
+    geoLocation.state == null && geoLocation.setState("");
+    geoLocation.street == null && geoLocation.setStreet("");
 
-    if (country == "" || city == "" || street == "" || state == "") {
+    if (
+      geoLocation.country == "" ||
+      geoLocation.city == "" ||
+      geoLocation.street == "" ||
+      geoLocation.state == ""
+    ) {
       setHasError(true);
     } else {
       setHasError(false);
@@ -98,40 +60,39 @@ const LocationScreen = () => {
         }}
       >
         <FormField
-          value={street}
+          value={geoLocation.street}
           placeholder={"Street"}
-          setValue={(value) => setStreet(value)}
-          error={street == "" ? requiredFieldError : null}
+          setValue={(value) => geoLocation.setStreet(value)}
+          error={geoLocation.street == "" ? requiredFieldError : null}
         />
         <FormField
-          value={region}
+          value={geoLocation.region}
           placeholder={"Region (Optional)"}
-          setValue={(value) => setRegion(value)}
+          setValue={(value) => geoLocation.setRegion(value)}
         />
         <FormField
-          value={city}
+          value={geoLocation.city}
           placeholder={"City"}
-          setValue={(value) => setCity(value)}
-          error={city == "" ? requiredFieldError : null}
+          setValue={(value) => geoLocation.setCity(value)}
+          error={geoLocation.city == "" ? requiredFieldError : null}
         />
         <FormField
-          value={state}
+          value={geoLocation.state}
           placeholder={"State"}
-          setValue={(value) => setState(value)}
-          error={state == "" ? requiredFieldError : null}
+          setValue={(value) => geoLocation.setState(value)}
+          error={geoLocation.state == "" ? requiredFieldError : null}
         />
         <FormField
-          value={country}
+          value={geoLocation.country}
           placeholder={"Country"}
-          setValue={(value) => setCountry(value)}
-          error={country == "" ? requiredFieldError : null}
+          setValue={(value) => geoLocation.setCountry(value)}
+          error={geoLocation.country == "" ? requiredFieldError : null}
         />
       </ScrollView>
       <Map
         modalVisible={modalVisible}
         setModalVisible={(value) => setModalVisible(value)}
-        setLocation={(value) => setLocation(value)}
-        // currentLocation={location}
+        setLocation={(value) => geoLocation.setLocation(value)}
       />
       <AppButton
         style={defaultStyles.submitButton}

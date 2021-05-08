@@ -46,5 +46,17 @@ export default useGoogleLocation = () => {
       });
   };
 
-  return { setLocation, country, state, city, street, region };
+  return {
+    setLocation,
+    country,
+    setCountry,
+    state,
+    setState,
+    city,
+    setCity,
+    street,
+    setStreet,
+    region,
+    setRegion,
+  };
 };
