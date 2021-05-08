@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-// import useLocation from "./../hooks/useLocation";
+import { StyleSheet } from "react-native";
+
 import AppButton from "./../components/Button";
-import { geoLocationClient } from "./../api/client";
-import Screen from "./../components/Screen";
-import Map from "./../components/Map";
 import AppText from "../components/Text";
 import defaultStyles from "./../config/styles";
-
-import FormField from "./../components/form/FormField";
+import LocationForm from "./../components/LocationForm";
+import MapModal from "../components/MapModal";
+import Screen from "./../components/Screen";
+import useGoogleLocation from "./../hooks/useGoogleLocation";
 
 const LocationScreen = () => {
   const geoLocation = useGoogleLocation();
 
   const [hasError, setHasError] = useState(false);
-
-  const requiredFieldError = "This Field Is Required";
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -38,11 +35,21 @@ const LocationScreen = () => {
     console.log("hasError:", hasError);
   };
 
+  const submitForm = () => {
+    validation();
+    console.log("country:", geoLocation.country);
+    console.log("city:", geoLocation.city);
+    console.log("state:", geoLocation.state);
+    console.log("region:", geoLocation.region);
+    console.log("street:", geoLocation.street);
+  };
+
   return (
     <Screen style={styles.container}>
       <AppText style={defaultStyles.textHeader}>
         Where's your place located?
       </AppText>
+
       <AppText style={defaultStyles.text}>
         Only confirmed guests will get your exact address after they book. We'll
         show everyone else an approximate location.
@@ -52,54 +59,17 @@ const LocationScreen = () => {
         title="Choose location on Map"
         onPress={() => setModalVisible(true)}
       />
+      <LocationForm geoLocation={geoLocation} />
 
-      <ScrollView
-        keyboardDismissMode="interactive"
-        style={{
-          flex: 1,
-        }}
-      >
-        <FormField
-          value={geoLocation.street}
-          placeholder={"Street"}
-          setValue={(value) => geoLocation.setStreet(value)}
-          error={geoLocation.street == "" ? requiredFieldError : null}
-        />
-        <FormField
-          value={geoLocation.region}
-          placeholder={"Region (Optional)"}
-          setValue={(value) => geoLocation.setRegion(value)}
-        />
-        <FormField
-          value={geoLocation.city}
-          placeholder={"City"}
-          setValue={(value) => geoLocation.setCity(value)}
-          error={geoLocation.city == "" ? requiredFieldError : null}
-        />
-        <FormField
-          value={geoLocation.state}
-          placeholder={"State"}
-          setValue={(value) => geoLocation.setState(value)}
-          error={geoLocation.state == "" ? requiredFieldError : null}
-        />
-        <FormField
-          value={geoLocation.country}
-          placeholder={"Country"}
-          setValue={(value) => geoLocation.setCountry(value)}
-          error={geoLocation.country == "" ? requiredFieldError : null}
-        />
-      </ScrollView>
-      <Map
-        modalVisible={modalVisible}
-        setModalVisible={(value) => setModalVisible(value)}
-        setLocation={(value) => geoLocation.setLocation(value)}
-      />
       <AppButton
         style={defaultStyles.submitButton}
         title="Next"
-        onPress={() => {
-          validation();
-        }}
+        onPress={() => submitForm()}
+      />
+      <MapModal
+        modalVisible={modalVisible}
+        setModalVisible={(value) => setModalVisible(value)}
+        setLocation={(value) => geoLocation.setLocation(value)}
       />
     </Screen>
   );

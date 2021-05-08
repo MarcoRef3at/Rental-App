@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import AppButton from "./Button";
 import MapContainer from "./maps/MapContainer";
-const Map = ({ modalVisible, setModalVisible, setLocation }) => {
+const MapModal = ({ modalVisible, setModalVisible, setLocation }) => {
   const [marker, setMarker] = useState(null);
 
   const hideModal = () => {
@@ -33,7 +33,7 @@ const Map = ({ modalVisible, setModalVisible, setLocation }) => {
   );
 };
 
-export default Map;
+export default MapModal;
 
 const styles = StyleSheet.create({
   container: {
