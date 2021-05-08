@@ -8,8 +8,9 @@ import LocationForm from "./../components/LocationForm";
 import MapModal from "../components/MapModal";
 import Screen from "./../components/Screen";
 import useGoogleLocation from "./../hooks/useGoogleLocation";
+import routes from "../navigation/routes";
 
-const LocationScreen = () => {
+const LocationScreen = ({ navigation }) => {
   const geoLocation = useGoogleLocation();
 
   const [hasError, setHasError] = useState(false);
@@ -64,7 +65,10 @@ const LocationScreen = () => {
       <AppButton
         style={defaultStyles.submitButton}
         title="Next"
-        onPress={() => submitForm()}
+        onPress={() => {
+          submitForm();
+          navigation.navigate(routes.AMENITIES);
+        }}
       />
       <MapModal
         modalVisible={modalVisible}
