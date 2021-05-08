@@ -5,7 +5,7 @@ import { GooglePlacesAutocomplete } from "./maps/react-native-google-places-auto
 import config from "../config";
 import AppTextInput from "./TextInput";
 
-const MapSearch = ({ setRegion, region }) => {
+const MapSearch = ({ setRegion, region, setMarker }) => {
   return (
     <GooglePlacesAutocomplete
       placeholder="Search"
@@ -19,6 +19,7 @@ const MapSearch = ({ setRegion, region }) => {
         const latitude = targetLocation.lat;
         const longitude = targetLocation.lng;
         setRegion({ ...region, latitude, longitude });
+        setMarker({ latitude, longitude });
       }}
       query={{
         key: config.googleMapsKey,

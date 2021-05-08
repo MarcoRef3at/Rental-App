@@ -126,20 +126,20 @@ const LocationScreen = () => {
           setValue={(value) => setCountry(value)}
           error={country == "" ? requiredFieldError : null}
         />
-        <Map
-          modalVisible={modalVisible}
-          setModalVisible={(value) => setModalVisible(value)}
-          setLocation={(value) => setLocation(value)}
-          // currentLocation={location}
-        />
-        <AppButton
-          style={defaultStyles.submitButton}
-          title="Next"
-          onPress={() => {
-            validation();
-          }}
-        />
       </ScrollView>
+      <Map
+        modalVisible={modalVisible}
+        setModalVisible={(value) => setModalVisible(value)}
+        setLocation={(value) => setLocation(value)}
+        // currentLocation={location}
+      />
+      <AppButton
+        style={defaultStyles.submitButton}
+        title="Next"
+        onPress={() => {
+          validation();
+        }}
+      />
     </Screen>
   );
 };

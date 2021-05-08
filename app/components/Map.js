@@ -42,45 +42,27 @@ const Map = ({ modalVisible, setModalVisible, setLocation }) => {
       onBackButtonPress={() => hideModal()}
       onBackdropPress={() => hideModal()}
     >
-      {/* <AppMapView
+      <AppMapView
         style={styles.map}
         region={region}
         marker={marker}
         setRegion={(value) => setRegion(value)}
         setMarker={(value) => setMarker(value)}
         setmapView={(value) => setmapView(value)}
-      /> */}
+      />
 
-      <MapView
-        ref={(ref) => {
-          setmapView(ref);
-        }}
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
-        region={region}
-        onRegionChangeComplete={(reg) => {
-          setRegion(reg);
-        }}
-        onPress={(e) => setMarker(e.nativeEvent.coordinate)}
-        showsUserLocation
-        showsMyLocationButton={false}
-        followsUserLocation={false}
-      >
-        {marker && <Marker coordinate={marker} />}
-      </MapView>
       <MapSearch
-        setRegion={(value) => setRegion(value)}
-        region={region}
         style={styles.search}
+        region={region}
+        setRegion={(value) => setRegion(value)}
+        setMarker={(value) => setMarker(value)}
       />
 
       <View style={styles.currentLocation}>
         <RoundButton
           icon="my-location"
           family="MaterialIcons"
-          onPress={() => {
-            relocate();
-          }}
+          onPress={() => relocate()}
         />
       </View>
 
@@ -100,13 +82,9 @@ export default Map;
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
-    margin: 0,
-    // backgroundColor: "yellow",
-    // borderColor: "red",
-    // borderWidth: 20,
-
     flex: 1,
+    margin: 0,
+    ...StyleSheet.absoluteFillObject,
   },
   map: {
     flex: 1,
