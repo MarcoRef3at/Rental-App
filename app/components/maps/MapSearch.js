@@ -1,9 +1,9 @@
 import React from "react";
 // import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { GooglePlacesAutocomplete } from "./maps/react-native-google-places-autocomplete/GooglePlacesAutocomplete";
+import { GooglePlacesAutocomplete } from "./react-native-google-places-autocomplete/GooglePlacesAutocomplete";
 
-import config from "../config";
-import AppTextInput from "./TextInput";
+import config from "./../../config";
+import AppTextInput from "./../TextInput";
 
 const MapSearch = ({ setRegion, region, setMarker }) => {
   return (

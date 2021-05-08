@@ -8,11 +8,13 @@ import ListingEditScreen from "../screens/ListingEditScreen";
 import NewListingButton from "./NewListingButton";
 import routes from "./routes";
 import ListingsNavigator from "./ListingsNavigator";
+import TestNavigator from "./TestNavigator";
 
 const Tab = createBottomTabNavigator();
-
 const AppNavigator = () => (
   <Tab.Navigator>
+    {__DEV__ && <Tab.Screen name="Test" component={TestNavigator} />}
+
     <Tab.Screen
       name="Feed"
       component={FeedNavigator}
