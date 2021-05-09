@@ -10,6 +10,7 @@ import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import useApi from "./../hooks/useApi";
 import AppText from "./../components/Text";
+import Spacer from "../components/Spacer";
 
 const validationSchema = Yup.object().shape({
   // type: Yup.object().required().nullable().label("Type"),
@@ -96,6 +97,7 @@ function ListingEditScreen({ navigation }) {
         <AppText style={defaultStyles.textHeader}>
           Which of These Sounds most like your place?
         </AppText>
+
         <ScrollView showsVerticalScrollIndicator={false}>
           <FormCounter label={guestNumberPlaceholder} type="guestNumber" />
           <Picker
@@ -159,7 +161,7 @@ function ListingEditScreen({ navigation }) {
             }
           })}
 
-          <View style={{ margin: 50, borderColor: "red" }} />
+          <Spacer />
         </ScrollView>
 
         <SubmitButton style={defaultStyles.submitButton} title="Next" />

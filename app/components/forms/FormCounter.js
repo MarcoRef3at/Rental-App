@@ -26,9 +26,7 @@ const FormCounter = ({ label, item, type, initialValue = 1 }) => {
             );
           }}
         />
-        <AppText style={{ paddingVertical: 5, paddingHorizontal: 15 }}>
-          {values[type]}
-        </AppText>
+        <AppText style={styles.counterValue}>{values[type]}</AppText>
         <RoundButton
           icon="plus-circle"
           onPress={() => {
@@ -53,5 +51,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "flex-end",
     padding: 5,
+  },
+  counterValue: {
+    paddingVertical: 5,
+    paddingHorizontal: 15,
   },
 });

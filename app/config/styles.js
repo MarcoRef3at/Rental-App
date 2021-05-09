@@ -9,7 +9,6 @@ const defaultStyles = {
     fontSize: 18,
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     justifyContent: "center",
-    width: "100%",
   },
   textHeader: {
     color: colors.dark,
