@@ -6,4 +6,5 @@ export default Object.freeze({
   REGISTER: "Register",
   LOCATION: "Location",
   AMENITIES: "Amenities",
+  HOUSE_RULES: "HouseRules",
 });

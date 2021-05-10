@@ -9,6 +9,7 @@ import MapModal from "../components/MapModal";
 import Screen from "./../components/Screen";
 import useGoogleLocation from "./../hooks/useGoogleLocation";
 import routes from "../navigation/routes";
+import FormScreen from "./../components/FormScreen";
 
 const LocationScreen = ({ navigation }) => {
   const geoLocation = useGoogleLocation();
@@ -46,16 +47,14 @@ const LocationScreen = ({ navigation }) => {
   };
 
   return (
-    <Screen style={styles.container}>
-      <AppText style={defaultStyles.textHeader}>
-        Where's your place located?
-      </AppText>
-
-      <AppText style={defaultStyles.text}>
-        Only confirmed guests will get your exact address after they book. We'll
-        show everyone else an approximate location.
-      </AppText>
-
+    <FormScreen
+      header="Where's your place located?"
+      subheader="Only confirmed guests will get your exact address after they book. We'll show everyone else an approximate location."
+      onSubmit={() => {
+        submitForm();
+        navigation.navigate(routes.AMENITIES);
+      }}
+    >
       <AppButton
         title="Choose location on Map"
         onPress={() => setModalVisible(true)}
@@ -75,7 +74,7 @@ const LocationScreen = ({ navigation }) => {
         setModalVisible={(value) => setModalVisible(value)}
         setLocation={(value) => geoLocation.setLocation(value)}
       />
-    </Screen>
+    </FormScreen>
   );
 };
 

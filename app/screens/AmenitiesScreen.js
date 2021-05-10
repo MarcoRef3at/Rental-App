@@ -11,7 +11,8 @@ import useGoogleLocation from "./../hooks/useGoogleLocation";
 import routes from "../navigation/routes";
 import FormChecker from "./../components/form/FormChecker";
 import Spacer from "../components/Spacer";
-const AmenitiesScreen = () => {
+import FormScreen from "./../components/FormScreen";
+const AmenitiesScreen = ({ navigation }) => {
   let aminities = [
     { ID: 1, Nm: "Wifi" },
     { ID: 2, Nm: "TV" },
@@ -21,6 +22,8 @@ const AmenitiesScreen = () => {
     { ID: 6, Nm: "Cooking basics" },
     { ID: 7, Nm: "Washer" },
     { ID: 8, Nm: "Smoke Alarm" },
+    { ID: 55, Nm: "Smoke Alarm" },
+    { ID: 33, Nm: "Smoke Alarm" },
   ];
 
   // Create variable to handle Values
@@ -31,15 +34,15 @@ const AmenitiesScreen = () => {
 
   const [aminitiesValue, setAminitiesValue] = useState(aminitiesValues);
   return (
-    <Screen style={styles.container}>
-      <AppText style={defaultStyles.textHeader}>
-        What amenities will you offer?
-      </AppText>
-
-      <AppText style={defaultStyles.text}>
-        You'll be able to add more amenities after you publish your listing.
-      </AppText>
-
+    <FormScreen
+      header="What amenities will you offer?"
+      subheader="You'll be able to add more amenities after you publish your listing."
+      onSubmit={() => {
+        console.log(aminitiesValue);
+        // submitForm();
+        navigation.navigate(routes.HOUSE_RULES);
+      }}
+    >
       <FlatList
         showsVerticalScrollIndicator={false}
         // style={{ width: deviceWidth - 50 }}
@@ -53,24 +56,9 @@ const AmenitiesScreen = () => {
           />
         )}
       />
-
-      <AppButton
-        style={defaultStyles.submitButton}
-        title="Next"
-        onPress={() => {
-          console.log(aminitiesValue);
-          // submitForm();
-          // navigation.navigate(routes.AMENITIES);
-        }}
-      />
-      <Spacer />
-    </Screen>
+    </FormScreen>
   );
 };
 export default AmenitiesScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-});
+const styles = StyleSheet.create({});
