@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, View, CheckBox, TouchableOpacity } from "react-native";
-
 import AppText from "./../Text";
-
+import RoundButton from "./../RoundButton";
+import colors from "../../config/colors";
 const FormChecker = ({ currentItem, items, setItems }) => {
   const [isSelected, setSelection] = useState(false);
   const handleChange = () => {
@@ -17,13 +17,30 @@ const FormChecker = ({ currentItem, items, setItems }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => handleChange()}>
-        <AppText>{currentItem.Nm}</AppText>
+        <AppText style={styles.label}>{currentItem.Nm}</AppText>
         <View style={styles.counter}>
-          <CheckBox
+          {/* <CheckBox
             value={isSelected}
             onValueChange={handleChange}
             style={styles.checkbox}
-          />
+          /> */}
+          {isSelected ? (
+            <RoundButton
+              family={"AntDesign"}
+              icon={"checkcircle"}
+              backgroundColor={"white"}
+              color={colors.primary}
+              onPress={() => handleChange()}
+            />
+          ) : (
+            <RoundButton
+              family={"Feather"}
+              icon={"circle"}
+              backgroundColor={null}
+              color={colors.primary}
+              onPress={() => handleChange()}
+            />
+          )}
         </View>
       </TouchableOpacity>
     </View>
@@ -37,6 +54,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     paddingVertical: 15,
     paddingHorizontal: 10,
+    // borderColor: "red",
+    // borderWidth: 2,
+  },
+  label: {
+    paddingTop: 7,
   },
   counter: {
     flexDirection: "row",

@@ -53,13 +53,6 @@ const AmenitiesScreen = () => {
           />
         )}
       />
-      {/* <FlatList
-        showsVerticalScrollIndicator={false}
-        // style={{ width: deviceWidth - 50 }}
-        data={aminities}
-        keyExtractor={(item) => item.ID.toString()}
-        renderItem={({ item }) => <FormChecker item={item} />}
-      /> */}
 
       <AppButton
         style={defaultStyles.submitButton}
