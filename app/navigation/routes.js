@@ -7,4 +7,5 @@ export default Object.freeze({
   LOCATION: "Location",
   AMENITIES: "Amenities",
   HOUSE_RULES: "HouseRules",
+  PHOTOS: "Photos",
 });
