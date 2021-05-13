@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Button,
+  Text,
+  View,
+  ScrollView,
+} from "react-native";
 import AppButton from "../components/Button";
 import FormScreen from "../components/FormScreen";
 import ImageInput from "../components/ImageInput";
@@ -7,8 +14,29 @@ import ImageInputList from "../components/ImageInputList";
 import * as ImagePicker from "expo-image-picker";
 // import ImageBrowser from "./../components/imagePicker.js/ImageBrowser";
 import AddPhotoModal from "./../components/AddPhoto";
+import Test from "./../components/Test";
 
-const PhotosScreen = ({ navigation }) => {
+const PhotosScreen = ({ navigation, route }) => {
+  const [photos, setphotos] = useState([]);
+  const renderImage = (item, i) => {
+    return (
+      <Image
+        style={{ height: 100, width: 100 }}
+        source={{ uri: item.uri }}
+        key={i}
+      />
+    );
+  };
+  useEffect(() => {
+    const { params } = route;
+    // console.log("params:", params);
+    if (params) {
+      const { photos } = params;
+      if (photos) setphotos(photos);
+      delete params.photos;
+    }
+  }, [route]);
+
   const [imageUri, setImageUri] = useState();
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -27,8 +55,6 @@ const PhotosScreen = ({ navigation }) => {
     }
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
-
   useEffect(() => {
     requestPermission();
   }, []);
@@ -45,13 +71,15 @@ const PhotosScreen = ({ navigation }) => {
         }}
       />
       <AppButton
-        title="Add Photo"
+        title={photos.length}
         onPress={() => {
-          console.log("Add Photo");
-          setModalVisible(true);
-          navigation.navigate("Test");
+          navigation.navigate("ImageBrowser", { goBack: "Photos" });
         }}
       />
+      {/* {photos.map((item, i) => renderImage(item, i))} */}
+      <View style={{ height: "100%", borderWidth: 2, borderColor: "red" }}>
+        <Test images={photos} />
+      </View>
       {/* <AddPhotoModal
         modalVisible={modalVisible}
         setModalVisible={(value) => setModalVisible(value)}

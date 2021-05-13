@@ -7,6 +7,7 @@ import {
   View,
   StyleSheet,
 } from "react-native";
+import colors from "../../config/colors";
 
 const { width } = Dimensions.get("window");
 
@@ -33,9 +34,6 @@ class ImageTile extends React.PureComponent {
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
             <ImageBackground style={styles.image} source={{ uri: item.uri }}>
-              {selectedItemNumber != 0 && (
-                <Text style={styles.text}>{selectedItemNumber}</Text>
-              )}
               {selected &&
                 renderSelectedComponent &&
                 renderSelectedComponent(selectedItemNumber)}
@@ -59,15 +57,5 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "center",
     alignItems: "center",
-  },
-  text: {
-    color: "white",
-    fontSize: 27,
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#000000a0",
-    borderRadius: 20,
-    width: 40,
-    height: 40,
   },
 });

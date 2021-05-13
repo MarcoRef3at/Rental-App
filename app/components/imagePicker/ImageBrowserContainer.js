@@ -7,9 +7,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import * as ImageManipulator from "expo-image-manipulator";
-import { ImageBrowser } from "expo-image-picker-multiple";
+// import { ImageBrowser } from "expo-image-picker-multiple";
+// import ImageBrowser from "./imagePicker/ImageBrowser";
+import ImageBrowser from "./ImageBrowser";
+import colors from "../../config/colors";
 
-export default class Test2 extends Component {
+export default class ImageBrowserContainer extends Component {
   _getHeaderLoader = () => <ActivityIndicator size="small" color={"#0580FF"} />;
 
   imagesCallback = (callback) => {
@@ -29,7 +32,9 @@ export default class Test2 extends Component {
             type: "image/jpg",
           });
         }
-        navigation.navigate("Test", { photos: cPhotos });
+
+        const goBack = this.props.route.params.goBack;
+        navigation.navigate(goBack, { photos: cPhotos });
       })
       .catch((e) => console.log(e));
   };
@@ -71,7 +76,7 @@ export default class Test2 extends Component {
     return (
       <View style={[styles.flex, styles.container]}>
         <ImageBrowser
-          max={4}
+          max={10}
           onChange={this.updateHandler}
           callback={this.imagesCallback}
           renderSelectedComponent={this.renderSelectedComponent}
@@ -100,12 +105,23 @@ const styles = StyleSheet.create({
     right: 3,
     bottom: 3,
     justifyContent: "center",
-    backgroundColor: "#0580FF",
+    backgroundColor: colors.primary,
   },
   countBadgeText: {
     fontWeight: "bold",
     alignSelf: "center",
     padding: "auto",
     color: "#ffffff",
+  },
+  text: {
+    color: "white",
+    fontSize: 27,
+    fontWeight: "bold",
+    textAlign: "center",
+    // backgroundColor: "#000000a0",
+    backgroundColor: colors.primary,
+    borderRadius: 20,
+    width: 40,
+    height: 40,
   },
 });

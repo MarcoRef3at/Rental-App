@@ -29,6 +29,7 @@ const HouseRules = ({ navigation }) => {
       subheader="Guests must agree to your house rules before they book"
       onSubmit={() => {
         console.log("ok");
+        navigation.navigate(routes.PHOTOS);
       }}
     >
       <FlatList

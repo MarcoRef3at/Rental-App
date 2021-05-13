@@ -9,6 +9,7 @@ import NewListingButton from "./NewListingButton";
 import routes from "./routes";
 import ListingsNavigator from "./ListingsNavigator";
 import TestNavigator from "./TestNavigator";
+import TestNavigator2 from "./TestNavigator2";
 
 const Tab = createBottomTabNavigator();
 const AppNavigator = () => (
@@ -65,6 +66,21 @@ const AppNavigator = () => (
         ),
       }}
     />
+    {__DEV__ && (
+      <Tab.Screen
+        name="Test2"
+        component={TestNavigator2}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="test-tube"
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
+    )}
   </Tab.Navigator>
 );
 
