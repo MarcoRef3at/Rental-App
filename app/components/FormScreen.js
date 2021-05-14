@@ -9,15 +9,19 @@ import Spacer from "./Spacer";
 const FormScreen = ({
   children,
   style,
-  onSubmit,
+  onSubmit = () => console.log("Next"),
   header = "HEADER",
   subheader = "subheader",
 }) => {
   return (
-    <Screen style={[styles.container, style]}>
-      <AppText style={defaultStyles.textHeader}>{header}</AppText>
+    <Screen style={[style]}>
+      <AppText style={[styles.padding, defaultStyles.textHeader]}>
+        {header}
+      </AppText>
 
-      <AppText style={defaultStyles.text}>{subheader}</AppText>
+      <AppText style={[styles.padding, defaultStyles.text]}>
+        {subheader}
+      </AppText>
       <>{children}</>
       <AppButton
         style={[defaultStyles.submitButton]}
@@ -34,5 +38,9 @@ export default FormScreen;
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    paddingTop: 10,
+  },
+  padding: {
+    paddingHorizontal: 10,
   },
 });

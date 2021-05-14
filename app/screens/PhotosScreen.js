@@ -63,23 +63,24 @@ const PhotosScreen = ({ navigation, route }) => {
       header="Add photos to your listing"
       subheader="Photos help guests imagine staying in your place. You can start with one and add more after you publish"
     >
-      <AppButton
+      {/* <AppButton
         title="Add Photos"
         onPress={() => {
           console.log("Add Photos");
           selectImage();
         }}
-      />
+      /> */}
       <AppButton
-        title={photos.length}
+        title={`Add Photos ${photos.length}`}
         onPress={() => {
           navigation.navigate("ImageBrowser", { goBack: "Photos" });
         }}
       />
       {/* {photos.map((item, i) => renderImage(item, i))} */}
-      <View style={{ height: "100%", borderWidth: 2, borderColor: "red" }}>
-        <Test images={photos} />
-      </View>
+
+      {/* <View style={{ borderWidth: 2, borderColor: "red" }}> */}
+      <Test images={photos} />
+      {/* </View> */}
       {/* <AddPhotoModal
         modalVisible={modalVisible}
         setModalVisible={(value) => setModalVisible(value)}

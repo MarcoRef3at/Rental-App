@@ -25,8 +25,8 @@ const defaultStyles = {
   },
   submitButton: {
     position: "absolute",
-    bottom: 0,
-    right: 0,
+    bottom: 10,
+    right: 10,
     width: "30%",
   },
 };

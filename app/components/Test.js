@@ -1,96 +1,95 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  View,
-  TouchableOpacity,
   Text,
-  Image,
-  Button,
+  View,
+  StyleSheet,
+  TouchableOpacity,
   Vibration,
+  TouchableHighlight,
+  Image,
+  ImageBackground,
 } from "react-native";
-import DraggableFlatList, {
-  RenderItemParams,
-} from "react-native-draggable-flatlist";
+import GridView from "react-native-draggable-gridview";
 import { useFocusEffect } from "@react-navigation/native";
 
-const initData = [
-  { key: 1, label: "test1" },
-  { key: 2, label: "test2" },
-];
+export default function App({ images }) {
+  const [data, setData] = useState([
+    "1",
+    "23",
+    "232",
+    "34",
+    "44",
+    "33",
+    "22",
+    "11",
+    "3",
+    "4",
+    "5",
+    "6",
+  ]);
 
-function Test({ images }) {
-  const [data, setData] = useState(initData);
-
-  const renderItem = useCallback(
-    ({ item, index, drag, isActive }: RenderItemParams<Item>) => {
-      return (
-        <TouchableOpacity
-          style={{
-            // flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            // height: 100,
-            // width: 100,
-            backgroundColor: isActive ? "red" : "black",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          // onLongPress={drag}
-          onLongPress={() => {
-            drag();
-            Vibration.vibrate(30);
-
-            console.log("item:", item);
-            console.log("index:", index);
-          }}
-        >
-          <Image
-            style={{ height: 200, width: 200 }}
-            source={{ uri: item.uri }}
-          />
-        </TouchableOpacity>
-      );
-    },
-    []
-  );
-
-  // useFocusEffect(() => {
-  //   console.log("useFocusEffect");
-  //   images &&
-  //     images.map((x, index) => {
-  //       // console.log("x", x);
-  //       x.key = index;
-  //       // console.log("x", x);
-  //     });
-  //   setData(images);
-  // });
   useFocusEffect(
     React.useCallback(() => {
       console.log("useFocusEffect");
+      let uris = [];
       images &&
-        images.map((x, index) => {
-          // console.log("x", x);
-          x.key = index;
-          // console.log("x", x);
+        images.map((image) => {
+          console.log("image:", image.uri);
+          uris.push(image.uri);
         });
-      setData(images);
+      setData(uris);
     }, [images])
   );
 
+  const renderItem = (item, index) => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          margin: 5,
+          justifyContent: "center",
+          backgroundColor: "gray",
+        }}
+      >
+        <ImageBackground
+          style={{ height: "100%", width: "100%" }}
+          source={{ uri: item }}
+        >
+          {index == 0 && <Text style={styles.coverPhoto}>COVER PHOTO</Text>}
+        </ImageBackground>
+      </View>
+    );
+  };
+
   return (
-    <View style={{ flex: 1 }}>
-      <DraggableFlatList
-        autoscrollThreshold={100}
-        horizontal
+    <View style={styles.wrapper}>
+      <GridView
         data={data}
+        numColumns={2}
         renderItem={renderItem}
-        keyExtractor={(item, index) => `draggable-item-${item.key}`}
-        onDragEnd={({ data }) => {
-          setData(data);
-          // console.log("data:", data);
+        onBeginDragging={() => Vibration.vibrate(30)}
+        onReleaseCell={(items) => {
+          setData(items);
+          Vibration.vibrate(10);
+          console.log("data:", items);
         }}
       />
     </View>
   );
 }
 
-export default Test;
+const styles = StyleSheet.create({
+  wrapper: {
+    paddingTop: 10,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  coverPhoto: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "center",
+    backgroundColor: "#000000a0",
+  },
+});
