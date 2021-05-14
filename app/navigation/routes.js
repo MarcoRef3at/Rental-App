@@ -8,4 +8,5 @@ export default Object.freeze({
   AMENITIES: "Amenities",
   HOUSE_RULES: "HouseRules",
   PHOTOS: "Photos",
+  IMAGE_BROWSER: "ImageBrowser",
 });

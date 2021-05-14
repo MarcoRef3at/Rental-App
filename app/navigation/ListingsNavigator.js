@@ -5,7 +5,7 @@ import LocationScreen from "./../screens/LocationScreen";
 import AmenitiesScreen from "./../screens/AmenitiesScreen";
 import HouseRules from "./../screens/HouseRules";
 import PhotosScreen from "./../screens/PhotosScreen";
-import Test from "./../components/Test";
+import Test from "../components/Test";
 import ImageBrowserContainer from "./../components/imagePicker/ImageBrowserContainer";
 
 const Stack = createStackNavigator();

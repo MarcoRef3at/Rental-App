@@ -11,6 +11,8 @@ import * as ImageManipulator from "expo-image-manipulator";
 // import ImageBrowser from "./imagePicker/ImageBrowser";
 import ImageBrowser from "./ImageBrowser";
 import colors from "../../config/colors";
+import ImageInput from "./../ImageInput";
+import ImageInputList from "./../ImageInputList";
 
 export default class ImageBrowserContainer extends Component {
   _getHeaderLoader = () => <ActivityIndicator size="small" color={"#0580FF"} />;
@@ -75,6 +77,10 @@ export default class ImageBrowserContainer extends Component {
 
     return (
       <View style={[styles.flex, styles.container]}>
+        <View style={{ flexDirection: "row" }}>
+          <ImageInput />
+          <ImageInputList />
+        </View>
         <ImageBrowser
           max={10}
           onChange={this.updateHandler}
