@@ -14,6 +14,7 @@ import colors from "../../config/colors";
 import ImageInput from "./../ImageInput";
 import ImageInputList from "./../ImageInputList";
 import ImageNativeBrowser from "./ImageNativeBrowser";
+import SubmitButton from "./../form/SubmitButton";
 
 export default class ImageBrowserContainer extends Component {
   _getHeaderLoader = () => <ActivityIndicator size="small" color={"#0580FF"} />;
@@ -52,6 +53,7 @@ export default class ImageBrowserContainer extends Component {
   }
 
   _renderDoneButton = (count, onSubmit) => {
+    console.log("onSubmit:", onSubmit);
     if (!count) return null;
     return (
       <TouchableOpacity title={"Done"} onPress={onSubmit}>
@@ -62,8 +64,8 @@ export default class ImageBrowserContainer extends Component {
 
   updateHandler = (count, onSubmit) => {
     this.props.navigation.setOptions({
-      title: `Selected ${count} files`,
-      headerRight: () => this._renderDoneButton(count, onSubmit),
+      title: `Selected ${count} images`,
+      // headerRight: () => this._renderDoneButton(count, onSubmit),
     });
   };
 
@@ -72,6 +74,10 @@ export default class ImageBrowserContainer extends Component {
       <Text style={styles.countBadgeText}>{number}</Text>
     </View>
   );
+
+  photoSubmit = () => {
+    null;
+  };
 
   render() {
     const emptyStayComponent = <Text style={styles.emptyStay}>Empty =</Text>;
@@ -90,6 +96,7 @@ export default class ImageBrowserContainer extends Component {
         </View>
         <ImageBrowser
           max={10}
+          // onChange={this.updateHandler}
           onChange={this.updateHandler}
           callback={this.imagesCallback}
           renderSelectedComponent={this.renderSelectedComponent}

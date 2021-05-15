@@ -10,6 +10,7 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import * as MediaLibrary from "expo-media-library";
 import * as Permissions from "expo-permissions";
 import ImageTile from "./ImageTile";
+import SubmitButton from "./../form/SubmitButton";
 
 const { width } = Dimensions.get("window");
 
@@ -170,7 +171,12 @@ export default class ImageBrowser extends React.Component {
     if (!hasCameraPermission)
       return this.props.noCameraPermissionComponent || null;
 
-    return <View style={styles.container}>{this.renderImages()}</View>;
+    return (
+      <View style={styles.container}>
+        {this.renderImages()}
+        <SubmitButton title="Save" onPress={() => this.prepareCallback()} />
+      </View>
+    );
   }
 }
 

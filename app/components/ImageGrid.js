@@ -14,7 +14,6 @@ export default function ImageGrid({ images }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log("useFocusEffect");
       let uris = [];
       images &&
         images.map((image) => {
