@@ -18,6 +18,19 @@ const ImageNativeBrowser = ({ navigation }) => {
       console.log("Error reading an image", error);
     }
   };
+  const cameraCapture = async () => {
+    try {
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.5,
+      });
+      if (!result.cancelled) {
+        navigation.navigate(routes.PHOTOS, { photos: result });
+      }
+    } catch (error) {
+      console.log("Error reading an image", error);
+    }
+  };
 
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -28,12 +41,22 @@ const ImageNativeBrowser = ({ navigation }) => {
     requestPermission();
   }, []);
   return (
-    <AppButton
-      title="Mobile Browser"
-      onPress={() => {
-        selectImage();
-      }}
-    />
+    <>
+      <AppButton
+        style={{ width: 200 }}
+        title="Mobile Browser"
+        onPress={() => {
+          selectImage();
+        }}
+      />
+      <AppButton
+        style={{ width: 200 }}
+        title="Camera"
+        onPress={() => {
+          cameraCapture();
+        }}
+      />
+    </>
   );
 };
 
