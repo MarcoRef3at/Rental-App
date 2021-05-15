@@ -18,7 +18,7 @@ export default function ImageGrid({ images }) {
       let uris = [];
       images &&
         images.map((image) => {
-          console.log("image:", image.uri);
+          // console.log("image:", image.uri);
           uris.push(image.uri);
         });
       setData(uris);

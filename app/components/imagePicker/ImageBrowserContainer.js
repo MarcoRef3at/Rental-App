@@ -13,6 +13,7 @@ import ImageBrowser from "./ImageBrowser";
 import colors from "../../config/colors";
 import ImageInput from "./../ImageInput";
 import ImageInputList from "./../ImageInputList";
+import ImageNativeBrowser from "./ImageNativeBrowser";
 
 export default class ImageBrowserContainer extends Component {
   _getHeaderLoader = () => <ActivityIndicator size="small" color={"#0580FF"} />;
@@ -78,8 +79,14 @@ export default class ImageBrowserContainer extends Component {
     return (
       <View style={[styles.flex, styles.container]}>
         <View style={{ flexDirection: "row" }}>
-          <ImageInput />
-          <ImageInputList />
+          {/* <ImageInput />
+          <ImageInputList /> */}
+
+          <ImageNativeBrowser
+            photos={this.props.route.params.photos}
+            setphotos={(p) => this.props.route.params.setphotos(p)}
+            navigation={this.props.navigation}
+          />
         </View>
         <ImageBrowser
           max={10}
