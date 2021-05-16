@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -8,21 +8,33 @@ import {
 } from "react-native";
 import GridView from "react-native-draggable-gridview";
 import { useFocusEffect } from "@react-navigation/native";
+import RoundButton from "./RoundButton";
 
 export default function ImageGrid({ images }) {
-  const [data, setData] = useState(["1"]);
+  const [data, setData] = useState(["null"]);
+  const updateGrid = () => {
+    let uris = [];
+    images &&
+      images.map((image) => {
+        uris.push(image.uri);
+      });
+    console.log("uris.length:", uris.length);
+    setData(uris);
+    console.log("uris.length:", uris.length);
+  };
 
   useFocusEffect(
     React.useCallback(() => {
-      let uris = [];
-      images &&
-        images.map((image) => {
-          // console.log("image:", image.uri);
-          uris.push(image.uri);
-        });
-      setData(uris);
+      updateGrid();
     }, [images])
   );
+
+  useEffect(() => {
+    // updateGrid();
+    console.log("====================================");
+    console.log("images change");
+    console.log("====================================");
+  }, [images]);
 
   const renderItem = (item, index) => {
     return (
@@ -39,6 +51,10 @@ export default function ImageGrid({ images }) {
           source={{ uri: item }}
         >
           {index == 0 && <Text style={styles.coverPhoto}>COVER PHOTO</Text>}
+          <RoundButton
+            icon="delete"
+            onPress={() => console.log("delete", index)}
+          />
         </ImageBackground>
       </View>
     );
@@ -73,6 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     textAlign: "center",
+    width: "65%",
     backgroundColor: "#000000a0",
   },
 });

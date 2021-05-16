@@ -13,6 +13,7 @@ import * as Permissions from "expo-permissions";
 import ImageTile from "./ImageTile";
 import SubmitButton from "./../form/SubmitButton";
 import ImageNativeBrowser from "./ImageNativeBrowser";
+import defaultStyles from "./../../config/styles";
 
 const { width } = Dimensions.get("window");
 
@@ -192,7 +193,11 @@ export default class ImageBrowser extends React.Component {
           addImageToList={(image) => this.addImageToList(image)}
         />
         {this.renderImages()}
-        <SubmitButton title="Save" onPress={() => this.prepareCallback()} />
+        <SubmitButton
+          style={defaultStyles.submitButton}
+          title="Save"
+          onPress={() => this.prepareCallback()}
+        />
       </View>
     );
   }

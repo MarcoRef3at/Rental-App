@@ -84,12 +84,6 @@ export default class ImageBrowserContainer extends Component {
 
     return (
       <View style={[styles.flex, styles.container]}>
-        <View style={{ flexDirection: "row" }}>
-          {/* <ImageInput />
-          <ImageInputList /> */}
-
-          {/* <ImageNativeBrowser navigation={this.props.navigation} /> */}
-        </View>
         <ImageBrowser
           max={10}
           // onChange={this.updateHandler}

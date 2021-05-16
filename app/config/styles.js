@@ -29,6 +29,10 @@ const defaultStyles = {
     right: 10,
     width: "30%",
   },
+  formButton: {
+    width: "50%",
+    alignSelf: "center",
+  },
 };
 
 export default defaultStyles;

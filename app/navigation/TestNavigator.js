@@ -18,7 +18,7 @@ const TestNavigator = () => (
     {/* <Stack.Screen name="HouseRules" component={HouseRules} /> */}
     {/* <Stack.Screen name="Photos" component={PhotosScreen} /> */}
     {/* <Stack.Screen name="Test" component={Test} /> */}
-    {/* <Stack.Screen name="Photos" component={PhotosScreen} /> */}
+    <Stack.Screen name="Photos" component={PhotosScreen} />
     <Stack.Screen name="ImageBrowser" component={ImageBrowserContainer} />
   </Stack.Navigator>
 );
