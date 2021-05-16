@@ -88,11 +88,7 @@ export default class ImageBrowserContainer extends Component {
           {/* <ImageInput />
           <ImageInputList /> */}
 
-          <ImageNativeBrowser
-            photos={this.props.route.params.photos}
-            setphotos={(p) => this.props.route.params.setphotos(p)}
-            navigation={this.props.navigation}
-          />
+          {/* <ImageNativeBrowser navigation={this.props.navigation} /> */}
         </View>
         <ImageBrowser
           max={10}

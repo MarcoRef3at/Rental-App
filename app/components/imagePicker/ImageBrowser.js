@@ -2,6 +2,7 @@ import React from "react";
 import {
   StyleSheet,
   View,
+  Text,
   FlatList,
   Dimensions,
   ActivityIndicator,
@@ -11,6 +12,7 @@ import * as MediaLibrary from "expo-media-library";
 import * as Permissions from "expo-permissions";
 import ImageTile from "./ImageTile";
 import SubmitButton from "./../form/SubmitButton";
+import ImageNativeBrowser from "./ImageNativeBrowser";
 
 const { width } = Dimensions.get("window");
 
@@ -65,7 +67,7 @@ export default class ImageBrowser extends React.Component {
     const { PORTRAIT_UP, PORTRAIT_DOWN } = ScreenOrientation.Orientation;
     const isPortrait =
       orientation === PORTRAIT_UP || orientation === PORTRAIT_DOWN;
-    return isPortrait ? 4 : 7;
+    return isPortrait ? 3 : 7;
   };
 
   selectImage = (index) => {
@@ -147,6 +149,18 @@ export default class ImageBrowser extends React.Component {
 
   renderEmptyStay = () => this.props.emptyStayComponent;
 
+  addImageToList = (image) => {
+    // Add New Image to photos array
+    let previous = this.state.photos;
+    let all = [image].concat(previous);
+    this.setState({ photos: all });
+    // Increment Selection by one to handle the new Image
+    let newSelected = this.state.selected.map((val) => ++val);
+    this.setState({ selected: newSelected });
+    // Select the New Image
+    this.selectImage(0);
+  };
+
   renderImages() {
     return (
       <FlatList
@@ -173,6 +187,10 @@ export default class ImageBrowser extends React.Component {
 
     return (
       <View style={styles.container}>
+        <ImageNativeBrowser
+          navigation={this.props.navigation}
+          addImageToList={(image) => this.addImageToList(image)}
+        />
         {this.renderImages()}
         <SubmitButton title="Save" onPress={() => this.prepareCallback()} />
       </View>
