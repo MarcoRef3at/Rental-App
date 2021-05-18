@@ -7,6 +7,7 @@ import defaultStyles from "./../config/styles";
 
 const PhotosScreen = ({ navigation, route }) => {
   const [photos, setphotos] = useState([]);
+  const [photosLength, setPhotosLength] = useState(0); //useEffect don't detect photos array changes .. so we use this variable state to detect changes of delete
 
   const addPhoto = (newPhotos) => {
     let previous = photos;
@@ -28,13 +29,13 @@ const PhotosScreen = ({ navigation, route }) => {
   let headerVisable = photos.length == 0;
 
   // Function to Delete Photo by index
-  const deletePhoto = (index) => {
+  const deletePhoto = async (index) => {
     let newPhotosArray = photos;
     newPhotosArray.splice(index, 1);
     setphotos(newPhotosArray);
-    console.log("photos.length:", photos.length);
+    setPhotosLength(photos.length);
+    return photos;
   };
-
   return (
     <FormScreen
       header="Add photos to your listing"
@@ -51,15 +52,12 @@ const PhotosScreen = ({ navigation, route }) => {
           });
         }}
       />
-      <AppButton
-        style={defaultStyles.formButton}
-        title="test"
-        onPress={() => {
-          deletePhoto(0);
-        }}
-      />
 
-      <ImageGrid images={photos} />
+      <ImageGrid
+        images={photos}
+        photosLength={photosLength}
+        deletePhoto={(index) => deletePhoto(index)}
+      />
     </FormScreen>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import {
   MaterialCommunityIcons,
   MaterialIcons,
@@ -16,38 +16,37 @@ function RoundButton({
   family = "MaterialCommunityIcons",
   backgroundColor = colors.primary,
   color = colors.white,
+  size = 40,
 }) {
   return (
     <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View
         style={[
-          styles.container,
+          {
+            width: size,
+            height: size,
+            borderRadius: 50,
+            justifyContent: "center",
+            alignItems: "center",
+          },
           { backgroundColor: disabled ? colors.disabled : backgroundColor },
         ]}
       >
         {family == "MaterialCommunityIcons" && (
-          <MaterialCommunityIcons name={icon} color={color} size={40} />
+          <MaterialCommunityIcons name={icon} color={color} size={size} />
         )}
         {family == "MaterialIcons" && (
-          <MaterialIcons name={icon} color={color} size={40} />
+          <MaterialIcons name={icon} color={color} size={size} />
         )}
         {family == "AntDesign" && (
-          <AntDesign name={icon} color={color} size={40} />
+          <AntDesign name={icon} color={color} size={size} />
         )}
-        {family == "Feather" && <Feather name={icon} color={color} size={40} />}
+        {family == "Feather" && (
+          <Feather name={icon} color={color} size={size} />
+        )}
       </View>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: 40,
-    height: 40,
-    borderRadius: 50,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 export default RoundButton;

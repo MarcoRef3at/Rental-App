@@ -9,18 +9,19 @@ import {
 import GridView from "react-native-draggable-gridview";
 import { useFocusEffect } from "@react-navigation/native";
 import RoundButton from "./RoundButton";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function ImageGrid({ images }) {
+export default function ImageGrid({ images, photosLength, deletePhoto }) {
+  // Carry string only no objects
   const [data, setData] = useState(["null"]);
-  const updateGrid = () => {
+
+  const updateGrid = (newGrid = images) => {
     let uris = [];
-    images &&
-      images.map((image) => {
+    newGrid &&
+      newGrid.map((image) => {
         uris.push(image.uri);
       });
-    console.log("uris.length:", uris.length);
     setData(uris);
-    console.log("uris.length:", uris.length);
   };
 
   useFocusEffect(
@@ -30,11 +31,8 @@ export default function ImageGrid({ images }) {
   );
 
   useEffect(() => {
-    // updateGrid();
-    console.log("====================================");
-    console.log("images change");
-    console.log("====================================");
-  }, [images]);
+    updateGrid();
+  }, [photosLength]);
 
   const renderItem = (item, index) => {
     return (
@@ -47,14 +45,34 @@ export default function ImageGrid({ images }) {
         }}
       >
         <ImageBackground
-          style={{ height: "100%", width: "100%" }}
+          style={{ flex: 1, height: "100%", width: "100%" }}
           source={{ uri: item }}
         >
-          {index == 0 && <Text style={styles.coverPhoto}>COVER PHOTO</Text>}
-          <RoundButton
-            icon="delete"
-            onPress={() => console.log("delete", index)}
-          />
+          {index == 0 && (
+            <Text style={styles.coverPhotoTitle}>COVER PHOTO</Text>
+          )}
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              alignItems: "flex-end",
+              margin: 5,
+            }}
+          >
+            <Text style={styles.coverPhotoTitle}>{index}</Text>
+            <RoundButton
+              icon={"delete"}
+              size={30}
+              onPress={() => {
+                console.log("index:", index);
+                deletePhoto(index).then((newPhotosArray) => {
+                  console.log("newPhotosArray:", newPhotosArray.length);
+                  console.log("data:", data.length);
+                  updateGrid(newPhotosArray);
+                  console.log("data:", data.length);
+                });
+              }}
+            />
+          </View>
         </ImageBackground>
       </View>
     );
@@ -70,7 +88,6 @@ export default function ImageGrid({ images }) {
         onReleaseCell={(items) => {
           setData(items);
           Vibration.vibrate(10);
-          console.log("data:", items);
         }}
       />
     </View>
@@ -84,12 +101,15 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
   },
-  coverPhoto: {
+  coverPhotoTitle: {
     color: "white",
     fontSize: 15,
     fontWeight: "bold",
     textAlign: "center",
     width: "65%",
     backgroundColor: "#000000a0",
+    borderRadius: 20,
+    margin: 5,
+    marginTop: 10,
   },
 });
