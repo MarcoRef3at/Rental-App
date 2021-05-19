@@ -38,6 +38,7 @@ const PhotosScreen = ({ navigation, route }) => {
   };
   return (
     <FormScreen
+      padding={false}
       header="Add photos to your listing"
       subheader="Photos help guests imagine staying in your place. You can start with one and add more after you publish"
       headerVisable={headerVisable}

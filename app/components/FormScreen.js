@@ -5,36 +5,31 @@ import AppText from "./Text";
 import AppButton from "./Button";
 import defaultStyles from "./../config/styles";
 import Spacer from "./Spacer";
-import SubmitButton from "./form/SubmitButton";
 
 const FormScreen = ({
   children,
   style,
-  onSubmit = () => console.log("Next"),
+  onSubmit,
   header = "HEADER",
-  headerVisable = true,
   subheader = "subheader",
-  subheaderVisable = true,
+  padding = true,
 }) => {
   return (
-    <Screen style={[style]}>
-      {headerVisable && (
-        <AppText style={[styles.padding, defaultStyles.textHeader]}>
-          {header}
-        </AppText>
-      )}
-      {subheaderVisable && (
-        <AppText style={[styles.padding, defaultStyles.text]}>
-          {subheader}
-        </AppText>
-      )}
+    <Screen style={[padding && styles.container, style]}>
+      <AppText style={[defaultStyles.textHeader, !padding && styles.padding]}>
+        {header}
+      </AppText>
+
+      <AppText style={[defaultStyles.text, !padding && styles.padding]}>
+        {subheader}
+      </AppText>
       <>{children}</>
-      <SubmitButton
+      <AppButton
         style={[defaultStyles.submitButton]}
         title="Next"
         onPress={() => onSubmit()}
       />
-      {/* <Spacer /> */}
+      <Spacer />
     </Screen>
   );
 };
@@ -44,9 +39,8 @@ export default FormScreen;
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    paddingTop: 10,
   },
   padding: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
 });
