@@ -9,24 +9,31 @@ import Spacer from "./Spacer";
 const FormScreen = ({
   children,
   style,
-  onSubmit,
+  onSubmit = () => console.log("Next"),
   header = "HEADER",
+  headerVisable = true,
   subheader = "subheader",
+  subheaderVisable = true,
   padding = true,
+  submitBottonTitle = "Next",
 }) => {
   return (
     <Screen style={[padding && styles.container, style]}>
-      <AppText style={[defaultStyles.textHeader, !padding && styles.padding]}>
-        {header}
-      </AppText>
+      {headerVisable && (
+        <AppText style={[defaultStyles.textHeader, !padding && styles.padding]}>
+          {header}
+        </AppText>
+      )}
 
-      <AppText style={[defaultStyles.text, !padding && styles.padding]}>
-        {subheader}
-      </AppText>
+      {subheaderVisable && (
+        <AppText style={[defaultStyles.text, !padding && styles.padding]}>
+          {subheader}
+        </AppText>
+      )}
       <>{children}</>
       <AppButton
         style={[defaultStyles.submitButton]}
-        title="Next"
+        title={submitBottonTitle}
         onPress={() => onSubmit()}
       />
       <Spacer />

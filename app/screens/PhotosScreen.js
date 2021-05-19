@@ -7,7 +7,6 @@ import defaultStyles from "./../config/styles";
 
 const PhotosScreen = ({ navigation, route }) => {
   const [photos, setphotos] = useState([]);
-  const [photosLength, setPhotosLength] = useState(0); //useEffect don't detect photos array changes .. so we use this variable state to detect changes of delete
 
   const addPhoto = (newPhotos) => {
     let previous = photos;
@@ -33,7 +32,6 @@ const PhotosScreen = ({ navigation, route }) => {
     let newPhotosArray = photos;
     newPhotosArray.splice(index, 1);
     setphotos(newPhotosArray);
-    // setPhotosLength(photos.length);
     return photos;
   };
   return (
@@ -43,6 +41,7 @@ const PhotosScreen = ({ navigation, route }) => {
       subheader="Photos help guests imagine staying in your place. You can start with one and add more after you publish"
       headerVisable={headerVisable}
       subheaderVisable={headerVisable}
+      submitBottonTitle={headerVisable ? "Skip" : "Next"}
     >
       <AppButton
         style={defaultStyles.formButton}
@@ -53,12 +52,8 @@ const PhotosScreen = ({ navigation, route }) => {
           });
         }}
       />
-      <ImageGrid
-        images={photos}
-        photosLength={photosLength}
-        deletePhoto={(index) => deletePhoto(index)}
-      />
-      {/* <GridTest /> */}
+
+      <ImageGrid images={photos} deletePhoto={(index) => deletePhoto(index)} />
     </FormScreen>
   );
 };
