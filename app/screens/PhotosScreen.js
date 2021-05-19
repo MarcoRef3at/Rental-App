@@ -33,7 +33,7 @@ const PhotosScreen = ({ navigation, route }) => {
     let newPhotosArray = photos;
     newPhotosArray.splice(index, 1);
     setphotos(newPhotosArray);
-    setPhotosLength(photos.length);
+    // setPhotosLength(photos.length);
     return photos;
   };
   return (
@@ -52,12 +52,12 @@ const PhotosScreen = ({ navigation, route }) => {
           });
         }}
       />
-
       <ImageGrid
         images={photos}
         photosLength={photosLength}
         deletePhoto={(index) => deletePhoto(index)}
       />
+      {/* <GridTest /> */}
     </FormScreen>
   );
 };

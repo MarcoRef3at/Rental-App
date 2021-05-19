@@ -10,6 +10,7 @@ import GridView from "react-native-draggable-gridview";
 import { useFocusEffect } from "@react-navigation/native";
 import RoundButton from "./RoundButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Spacer from "./Spacer";
 
 export default function ImageGrid({ images, photosLength, deletePhoto }) {
   // Carry string only no objects
@@ -30,9 +31,11 @@ export default function ImageGrid({ images, photosLength, deletePhoto }) {
     }, [images])
   );
 
-  useEffect(() => {
-    updateGrid();
-  }, [photosLength]);
+  // useEffect(() => {
+  //   updateGrid();
+  // }, [photosLength]);
+
+  const onPressDelete = (item) => setData(data.filter((v) => v != item));
 
   const renderItem = (item, index) => {
     return (
@@ -58,18 +61,20 @@ export default function ImageGrid({ images, photosLength, deletePhoto }) {
               margin: 5,
             }}
           >
-            <Text style={styles.coverPhotoTitle}>{index}</Text>
+            <Text
+              style={[
+                styles.coverPhotoTitle,
+                { width: "10%", position: "absolute", bottom: 0 },
+              ]}
+            >
+              {index}
+            </Text>
             <RoundButton
               icon={"delete"}
               size={30}
               onPress={() => {
-                console.log("index:", index);
-                deletePhoto(index).then((newPhotosArray) => {
-                  console.log("newPhotosArray:", newPhotosArray.length);
-                  console.log("data:", data.length);
-                  updateGrid(newPhotosArray);
-                  console.log("data:", data.length);
-                });
+                onPressDelete(item);
+                deletePhoto(index);
               }}
             />
           </View>
@@ -89,7 +94,11 @@ export default function ImageGrid({ images, photosLength, deletePhoto }) {
           setData(items);
           Vibration.vibrate(10);
         }}
+        // locked={locked}
+        // renderLockedItem={renderLockedItem}
       />
+      <Spacer />
+      <Spacer />
     </View>
   );
 }
