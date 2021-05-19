@@ -9,4 +9,6 @@ export default Object.freeze({
   HOUSE_RULES: "HouseRules",
   PHOTOS: "Photos",
   IMAGE_BROWSER: "ImageBrowser",
+  LIST_NAME: "ListName",
+  AVAILABILITY: "Availability",
 });

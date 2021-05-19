@@ -37,6 +37,7 @@ const ModalOptions = ({
   };
   return (
     <Modal
+      style={styles.modalContainer}
       propagateSwipe
       animationType="slide"
       transparent={true}
@@ -86,13 +87,18 @@ const ModalOptions = ({
 export default ModalOptions;
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    width: deviceWidth,
+    left: 0,
+    margin: 0,
+  },
   modalView: {
     flexDirection: "row",
     // alignContent: "flex-end",
     position: "absolute",
     width: "100%",
     // position: "absolute",
-    bottom: -20,
+    bottom: 0,
 
     backgroundColor: "white",
     borderColor: defaultStyles.colors.black,

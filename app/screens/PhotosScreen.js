@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import AppButton from "../components/Button";
 import FormScreen from "../components/FormScreen";
 import ImageGrid from "../components/ImageGrid";
+import routes from "../navigation/routes";
 import defaultStyles from "./../config/styles";
 
 const PhotosScreen = ({ navigation, route }) => {
@@ -42,6 +43,7 @@ const PhotosScreen = ({ navigation, route }) => {
       headerVisable={headerVisable}
       subheaderVisable={headerVisable}
       submitBottonTitle={headerVisable ? "Skip" : "Next"}
+      onSubmit={() => navigation.navigate(routes.LIST_NAME)}
     >
       <AppButton
         style={defaultStyles.formButton}
