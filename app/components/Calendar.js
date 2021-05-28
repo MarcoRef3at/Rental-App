@@ -1,98 +1,57 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import React, { useState } from "react";
+import moment from "moment";
+import { Button, View } from "react-native";
+import { Calendar, CalendarList } from "react-native-calendars";
+import colors from "../config/colors";
 
-const AppCalendar = () => {
-  const getCurrentDate = () => {
-    var date = new Date().getDate();
-    var month = new Date().getMonth() + 1;
-    var year = new Date().getFullYear();
+const _format = "YYYY-MM-DD";
+const _today = moment().format(_format);
+const _maxDate = moment().add(1, "years").format(_format);
+const AppCalendar = ({ allBlocked = false }) => {
+  const [markedDates, setMarkedDates] = useState({});
 
-    return year + "-" + month + "-" + date; //format: dd-mm-yyyy;
-  };
-  let selectStyle = {
-    color: "green",
-    disabled: true,
-    endingDay: true,
-    startingDay: true,
-  };
-  const marked = {
-    "2021-05-27": selectStyle,
-    "2021-05-29": selectStyle,
-  };
-  const [selected, setSelected] = useState(marked);
+  const onDaySelect = (day) => {
+    const _selectedDay = moment(day.dateString).format(_format);
+    let selected = true;
 
-  const addToSelected = (day) => {
-    let previous = selected;
-    previous[day] = selectStyle;
-    setSelected(previous);
-  };
+    // Already in marked dates, so reverse current marked state
+    if (markedDates[_selectedDay]) {
+      selected = !markedDates[_selectedDay].selected;
+    }
 
-  useEffect(() => {
-    console.log("selected:", selected);
-  }, [selected]);
+    // Create a new object using object property spread since it should be immutable
+    // Reading: https://davidwalsh.name/merge-objects
+
+    const updatedMarkedDates = {
+      ...markedDates,
+      ...{ [_selectedDay]: { selected } },
+    };
+    // Triggers component to render again, picking up the new state
+    setMarkedDates(updatedMarkedDates);
+  };
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
+      {/* <Button
+        title="test"
+        onPress={() => console.log("markedDates:", markedDates)}
+      /> */}
       <CalendarList
-        // markingType={"custom"}
-        markedDates={selected}
-        // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
-        // markingType={"period"}
-        // markedDates={{ [selected[1]]: { selected: true, marked: true } }}
-        // markedDates={{
-        //   "2021-05-30": customStyles.blocked,
-        //   "2021-05-31": { disabled: true, disableTouchEvent: false },
-        // }}
+        firstDay={6}
+        minDate={_today}
         pastScrollRange={0}
-        // dayComponent={(date, state) => {
-        //   console.log("state:", date);
-        //   return (
-        //     <Text
-        //       style={{
-        //         textAlign: "center",
-        //         color: state === "disabled" ? "gray" : "black",
-        //       }}
-        //     >
-        //       {date.day}
-        //     </Text>
-        //   );
-        // }}
-        // minDate={getCurrentDate}
-        // Handler which gets executed on day press. Default = undefined
-        onDayPress={(day) => {
-          addToSelected(day.dateString);
+        futureScrollRange={12}
+        onDayPress={onDaySelect}
+        markedDates={markedDates}
+        theme={{
+          selectedDayBackgroundColor: allBlocked ? colors.primary : "white",
+          selectedDayTextColor: allBlocked ? "#ffffff" : "#d9e1e8",
+          dayTextColor: allBlocked ? "#d9e1e8" : "#2d4150",
+          textDisabledColor: "#d9e1e8",
         }}
-        // Handler which gets executed on day long press. Default = undefined
-        onDayLongPress={(day) => {
-          console.log("selected day", day.dateString);
-        }}
-        // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-        // monthFormat={"yyyy MM"}
-        // Handler which gets executed when visible month changes in calendar. Default = undefined
-        onMonthChange={(month) => {
-          console.log("month changed", month);
-        }}
-        enableSwipeMonths={true}
       />
     </View>
   );
 };
 
 export default AppCalendar;
-
-const styles = StyleSheet.create({});
-const customStyles = {
-  blocked: {
-    customStyles: {
-      container: {
-        backgroundColor: "grey",
-      },
-      text: {
-        textDecorationLine: "line-through",
-        textDecorationStyle: "solid",
-        fontWeight: "normal",
-      },
-    },
-  },
-};
