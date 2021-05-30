@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { Button, View } from "react-native";
-import { Calendar, CalendarList } from "react-native-calendars";
+import { View } from "react-native";
+import { CalendarList } from "react-native-calendars";
 import colors from "../config/colors";
 
 const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
+const _tomorrow = moment().add(1, "days").format(_format);
 const _maxDate = moment().add(1, "years").format(_format);
 const AppCalendar = ({ allBlocked = false }) => {
   const [markedDates, setMarkedDates] = useState({});
@@ -38,7 +39,7 @@ const AppCalendar = ({ allBlocked = false }) => {
       /> */}
       <CalendarList
         firstDay={6}
-        minDate={_today}
+        minDate={_tomorrow}
         pastScrollRange={0}
         futureScrollRange={12}
         onDayPress={onDaySelect}
