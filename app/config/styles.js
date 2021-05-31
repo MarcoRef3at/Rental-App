@@ -16,6 +16,19 @@ const defaultStyles = {
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     fontWeight: "bold",
   },
+  textHeader2: {
+    color: colors.dark,
+    fontSize: 25,
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    fontWeight: "bold",
+    paddingVertical: 10,
+  },
+  textHeader3: {
+    color: colors.dark,
+    fontSize: 18,
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    fontWeight: "bold",
+  },
   modalHeader: {
     color: colors.dark,
     padding: 20,

@@ -3,29 +3,17 @@ import { StyleSheet, View, CheckBox, TouchableOpacity } from "react-native";
 import AppText from "./../Text";
 import RoundButton from "./../RoundButton";
 import colors from "../../config/colors";
-const FormChecker = ({ currentItem, items, setItems }) => {
-  let index = items.findIndex((element) => element.ID == currentItem.ID);
-  const [isSelected, setSelection] = useState(items[index].value);
+
+const FormSingleChecker = ({ label, value, setValue }) => {
   const handleChange = () => {
-    setSelection(!isSelected);
-    let newValue = { ...currentItem, value: !isSelected };
-    let index = items.findIndex((element) => element.ID == newValue.ID);
-    items[index] = newValue;
-    let newValues = [...items];
-    setItems(newValues);
-    // console.log("item:", items);
+    setValue(!value);
   };
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => handleChange()}>
-        <AppText style={styles.label}>{currentItem.Nm}</AppText>
+        <AppText style={styles.label}>{label}</AppText>
         <View style={styles.counter}>
-          {/* <CheckBox
-            value={isSelected}
-            onValueChange={handleChange}
-            style={styles.checkbox}
-          /> */}
-          {isSelected ? (
+          {value ? (
             <RoundButton
               family={"AntDesign"}
               icon={"checkcircle"}
@@ -48,7 +36,7 @@ const FormChecker = ({ currentItem, items, setItems }) => {
   );
 };
 
-export default FormChecker;
+export default FormSingleChecker;
 
 const styles = StyleSheet.create({
   container: {

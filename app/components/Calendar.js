@@ -12,6 +12,7 @@ const AppCalendar = ({ allBlocked = false }) => {
   const [markedDates, setMarkedDates] = useState({});
 
   const onDaySelect = (day) => {
+    console.log("day:", day);
     const _selectedDay = moment(day.dateString).format(_format);
     let selected = true;
 

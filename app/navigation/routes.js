@@ -11,4 +11,5 @@ export default Object.freeze({
   IMAGE_BROWSER: "ImageBrowser",
   LIST_NAME: "ListName",
   AVAILABILITY: "Availability",
+  CALENDAR: "Calendar",
 });

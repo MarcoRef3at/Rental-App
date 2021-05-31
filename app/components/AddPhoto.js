@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import AppButton from "./Button";
 import ImageBrowser from "./imagePicker/ImageBrowser";
-import Test from "./Test";
+import AppFormPicker from "./AppFormPicker";
 const AddPhotoModal = ({ modalVisible, setModalVisible }) => {
   const hideModal = () => {
     setModalVisible(false);
@@ -31,7 +31,7 @@ const AddPhotoModal = ({ modalVisible, setModalVisible }) => {
           console.log("callback:", callback);
         }}
       /> */}
-      <Test />
+      <AppFormPicker />
       <AppButton
         style={styles.save}
         title="Save"
