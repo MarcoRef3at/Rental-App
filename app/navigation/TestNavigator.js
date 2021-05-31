@@ -11,6 +11,7 @@ import ImageBrowserContainer from "./../components/imagePicker/ImageBrowserConta
 import ListingNameScreen from "./../screens/ListingNameScreen";
 import AvailabilityScreen from "./../screens/AvailabilityScreen";
 import CalendarScreen from "./../screens/CalendarScreen";
+import PriceScreen from "./../screens/PriceScreen";
 
 const Stack = createStackNavigator();
 const TestNavigator = () => (
@@ -24,8 +25,9 @@ const TestNavigator = () => (
     {/* <Stack.Screen name="Photos" component={PhotosScreen} />
     <Stack.Screen name="ImageBrowser" component={ImageBrowserContainer} /> */}
     {/* <Stack.Screen name="Name" component={ListingNameScreen} /> */}
-    <Stack.Screen name="Availability" component={AvailabilityScreen} />
-    <Stack.Screen name="Calendar" component={CalendarScreen} />
+    {/* <Stack.Screen name="Availability" component={AvailabilityScreen} />
+    <Stack.Screen name="Calendar" component={CalendarScreen} /> */}
+    <Stack.Screen name="Price" component={PriceScreen} />
   </Stack.Navigator>
 );
 

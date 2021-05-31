@@ -12,4 +12,5 @@ export default Object.freeze({
   LIST_NAME: "ListName",
   AVAILABILITY: "Availability",
   CALENDAR: "Calendar",
+  PRICE: "Price",
 });
