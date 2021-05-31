@@ -13,4 +13,5 @@ export default Object.freeze({
   AVAILABILITY: "Availability",
   CALENDAR: "Calendar",
   PRICE: "Price",
+  REVIEW: "Review",
 });

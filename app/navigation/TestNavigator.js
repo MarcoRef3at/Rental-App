@@ -12,6 +12,7 @@ import ListingNameScreen from "./../screens/ListingNameScreen";
 import AvailabilityScreen from "./../screens/AvailabilityScreen";
 import CalendarScreen from "./../screens/CalendarScreen";
 import PriceScreen from "./../screens/PriceScreen";
+import ReviewScreen from "./../screens/ReviewScreen";
 
 const Stack = createStackNavigator();
 const TestNavigator = () => (
@@ -28,6 +29,7 @@ const TestNavigator = () => (
     {/* <Stack.Screen name="Availability" component={AvailabilityScreen} />
     <Stack.Screen name="Calendar" component={CalendarScreen} /> */}
     <Stack.Screen name="Price" component={PriceScreen} />
+    <Stack.Screen name="Review" component={ReviewScreen} />
   </Stack.Navigator>
 );
 
