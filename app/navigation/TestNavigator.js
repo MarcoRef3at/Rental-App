@@ -26,10 +26,10 @@ const TestNavigator = () => (
     {/* <Stack.Screen name="Photos" component={PhotosScreen} />
     <Stack.Screen name="ImageBrowser" component={ImageBrowserContainer} /> */}
     {/* <Stack.Screen name="Name" component={ListingNameScreen} /> */}
-    {/* <Stack.Screen name="Availability" component={AvailabilityScreen} />
-    <Stack.Screen name="Calendar" component={CalendarScreen} /> */}
-    <Stack.Screen name="Price" component={PriceScreen} />
-    <Stack.Screen name="Review" component={ReviewScreen} />
+    <Stack.Screen name="Availability" component={AvailabilityScreen} />
+    <Stack.Screen name="Calendar" component={CalendarScreen} />
+    {/* <Stack.Screen name="Price" component={PriceScreen} />
+    <Stack.Screen name="Review" component={ReviewScreen} /> */}
   </Stack.Navigator>
 );
 

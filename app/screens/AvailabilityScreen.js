@@ -8,17 +8,22 @@ import { ScrollView } from "react-native-gesture-handler";
 import TripLength from "../components/Availability/TripLength";
 import routes from "../navigation/routes";
 
-const AvailabilityScreen = ({ navigation }) => {
+const AvailabilityScreen = ({ navigation, route }) => {
+  const [calendarAvailablilty, setCalendarAvailablilty] = useState(0);
   return (
     <FormScreen
       header={"Availability"}
       subheader={""}
       onSubmit={() => {
-        navigation.navigate(routes.CALENDAR);
+        navigation.navigate(routes.CALENDAR, {
+          calendarAvailablilty,
+        });
       }}
     >
       <ScrollView showsVerticalScrollIndicator={false}>
-        <BookingWindow />
+        <BookingWindow
+          setCalendarAvailablilty={(x) => setCalendarAvailablilty(x)}
+        />
         <CheckIn />
         <TripLength />
       </ScrollView>

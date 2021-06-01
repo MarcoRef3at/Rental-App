@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { View } from "react-native";
+import { Button, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import colors from "../config/colors";
 
@@ -8,7 +8,9 @@ const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
 const _tomorrow = moment().add(1, "days").format(_format);
 const _maxDate = moment().add(1, "years").format(_format);
-const AppCalendar = ({ allBlocked = false }) => {
+const AppCalendar = ({ calendarAvailablilty }) => {
+  let allBlocked = calendarAvailablilty.ID > 11 ? false : true;
+
   const [markedDates, setMarkedDates] = useState({});
 
   const onDaySelect = (day) => {
@@ -30,14 +32,30 @@ const AppCalendar = ({ allBlocked = false }) => {
     };
     // Triggers component to render again, picking up the new state
     setMarkedDates(updatedMarkedDates);
+
+    console.log("markedDates:", markedDates);
   };
+
+  // A function to select available dates based on props
+  const availableDates = (number) => {
+    let dates = {};
+    for (let i = 0; i < number; i++) {
+      dates[moment().add(i, "days").format(_format)] = { selected: true };
+    }
+    setMarkedDates(dates);
+  };
+
+  useEffect(() => {
+    setMarkedDates({});
+    console.log("calendarAvailablilty:", calendarAvailablilty.ID);
+    if (calendarAvailablilty.ID < 12 && calendarAvailablilty.ID > 0) {
+      availableDates(calendarAvailablilty.ID * 30);
+      allBlocked = true;
+    }
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <Button
-        title="test"
-        onPress={() => console.log("markedDates:", markedDates)}
-      /> */}
       <CalendarList
         firstDay={6}
         minDate={_tomorrow}

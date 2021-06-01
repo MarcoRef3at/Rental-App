@@ -4,13 +4,7 @@ import defaultStyles from "../../config/styles";
 import AppFormPicker from "../AppFormPicker";
 import AppText from "../Text";
 
-const BookingWindow = () => {
-  const [advanceNotice, setAdvanceNotice] = useState({
-    ID: 1,
-    Nm: "At least 1 day's notice",
-  });
-  const [reservationRequest, setReservationRequest] = useState();
-  const [availablity, setAvailablity] = useState();
+const BookingWindow = ({ setCalendarAvailablilty }) => {
   const response = [
     {
       ID: 0,
@@ -60,30 +54,37 @@ const BookingWindow = () => {
   ];
   const availabliltyWindow = [
     {
-      ID: 0,
+      ID: 13,
       Nm: "All Future Dates",
     },
     {
-      ID: 1,
+      ID: 12,
       Nm: "12 months in advance",
     },
     {
-      ID: 3,
+      ID: 9,
       Nm: "9 months in advance",
     },
     {
-      ID: 4,
+      ID: 6,
       Nm: "6 months in advance",
     },
     {
-      ID: 5,
+      ID: 3,
       Nm: "3 months in advance",
     },
     {
-      ID: 6,
+      ID: 0,
       Nm: "Dates unavailable by default",
     },
   ];
+
+  const [advanceNotice, setAdvanceNotice] = useState({
+    ID: 1,
+    Nm: "At least 1 day's notice",
+  });
+  const [reservationRequest, setReservationRequest] = useState();
+  const [availablity, setAvailablity] = useState(availabliltyWindow[0]);
 
   return (
     <View>
@@ -127,6 +128,7 @@ const BookingWindow = () => {
         selectedItem={availablity}
         onSelectItem={(item) => {
           setAvailablity(item);
+          setCalendarAvailablilty(item);
         }}
         header={"Availabilty window"}
         subheader={"How far into the future can guests book?"}
