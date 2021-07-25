@@ -8,6 +8,7 @@ import PhotosScreen from "../screens/PhotosScreen";
 import { ImageBrowser } from "expo-image-picker-multiple";
 import AppFormPicker from "../components/AppFormPicker";
 import ImageBrowserContainer from "../components/imagePicker/ImageBrowserContainer";
+import Test from "../components/Test";
 
 const Stack = createStackNavigator();
 const TestNavigator2 = () => (
@@ -17,8 +18,9 @@ const TestNavigator2 = () => (
     {/* <Stack.Screen name="Location" component={LocationScreen} /> */}
     {/* <Stack.Screen name="Amenities" component={AmenitiesScreen} /> */}
     {/* <Stack.Screen name="HouseRules" component={HouseRules} /> */}
-    <Stack.Screen name="Photos" component={PhotosScreen} />
-    <Stack.Screen name="ImageBrowser" component={ImageBrowserContainer} />
+    {/* <Stack.Screen name="Photos" component={PhotosScreen} />
+    <Stack.Screen name="ImageBrowser" component={ImageBrowserContainer} /> */}
+    <Stack.Screen name="Test" component={Test} />
   </Stack.Navigator>
 );
 

@@ -8,7 +8,7 @@ const _format = "YYYY-MM-DD";
 const _today = moment().format(_format);
 const _tomorrow = moment().add(1, "days").format(_format);
 const _maxDate = moment().add(1, "years").format(_format);
-const AppCalendar = ({ calendarAvailablilty }) => {
+const AppCalendar = ({ calendarAvailablilty = { ID: 13, Nm: "All" } }) => {
   let allBlocked = calendarAvailablilty.ID > 11 ? false : true;
 
   const [markedDates, setMarkedDates] = useState({});
