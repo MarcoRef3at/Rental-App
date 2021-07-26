@@ -29,9 +29,9 @@ const TestNavigator = () => (
     {/* <Stack.Screen name="Name" component={ListingNameScreen} /> */}
     {/* <Stack.Screen name="Availability" component={AvailabilityScreen} />
     <Stack.Screen name="Calendar" component={CalendarScreen} /> */}
-    {/* <Stack.Screen name="Price" component={PriceScreen} />
-    <Stack.Screen name="Review" component={ReviewScreen} /> */}
-    <Stack.Screen name="Test" component={Test} />
+    {/* <Stack.Screen name="Price" component={PriceScreen} />*/}
+    <Stack.Screen name="Review" component={ReviewScreen} />
+    {/* <Stack.Screen name="Test" component={Test} /> */}
   </Stack.Navigator>
 );
 
