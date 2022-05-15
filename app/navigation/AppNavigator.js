@@ -14,7 +14,7 @@ import TestNavigator2 from "./TestNavigator2";
 const Tab = createBottomTabNavigator();
 const AppNavigator = () => (
   <Tab.Navigator>
-    {__DEV__ && (
+    {/* {__DEV__ && (
       <Tab.Screen
         name="Test"
         component={TestNavigator}
@@ -28,7 +28,7 @@ const AppNavigator = () => (
           ),
         }}
       />
-    )}
+    )} */}
 
     <Tab.Screen
       name="Feed"
@@ -36,7 +36,7 @@ const AppNavigator = () => (
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="home" color={color} size={size} />
-        ),
+        )
       }}
     />
     <Tab.Screen
@@ -54,7 +54,7 @@ const AppNavigator = () => (
             color={color}
             size={size}
           />
-        ),
+        )
       })}
     />
     <Tab.Screen
@@ -63,10 +63,10 @@ const AppNavigator = () => (
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="account" color={color} size={size} />
-        ),
+        )
       }}
     />
-    {__DEV__ && (
+    {/* {__DEV__ && (
       <Tab.Screen
         name="Test2"
         component={TestNavigator2}
@@ -77,10 +77,10 @@ const AppNavigator = () => (
               color={color}
               size={size}
             />
-          ),
+          )
         }}
       />
-    )}
+    )} */}
   </Tab.Navigator>
 );
 

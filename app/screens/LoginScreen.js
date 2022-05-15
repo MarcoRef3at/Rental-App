@@ -7,7 +7,7 @@ import {
   ErrorMessage,
   Form,
   FormField,
-  SubmitButton,
+  SubmitButton
 } from "../components/forms";
 import authApi from "../api/auth";
 import AuthContext from "./../auth/context";
@@ -24,17 +24,23 @@ function LoginScreen(props) {
   const [loginFailed, setLoginFailed] = useState(false);
 
   const handleSubmit = async ({ email, password }) => {
-    const result = await authApi.login(email, password);
-    let response = result.data["Cki"] || result.data["Error"];
-    if (response == "Invalid password" || response == "Unregistered mail")
-      return setLoginFailed(true);
+    console.log("login");
+    try {
+      var result = await authApi.login(email, password);
+      console.log("result:", result);
+      let response = result.data["Cki"] || result.data["Error"];
+      if (response == "Invalid password" || response == "Unregistered mail")
+        return setLoginFailed(true);
 
-    setLoginFailed(false);
-    const token = result.data.Cki;
-    authContext.setToken(token);
-    console.log("token:", token);
-    authStorage.storeToken(token);
-    // auth.logIn(result.data);
+      setLoginFailed(false);
+      const token = result.data.Cki;
+      authContext.setToken(token);
+      console.log("token:", token);
+      authStorage.storeToken(token);
+      // auth.logIn(result.data);
+    } catch (error) {
+      console.log("Login error:", error);
+    }
   };
 
   return (
@@ -76,15 +82,15 @@ function LoginScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 10
   },
   logo: {
     width: 80,
     height: 80,
     alignSelf: "center",
     marginTop: 50,
-    marginBottom: 20,
-  },
+    marginBottom: 20
+  }
 });
 
 export default LoginScreen;
