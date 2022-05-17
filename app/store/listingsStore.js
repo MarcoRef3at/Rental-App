@@ -4,21 +4,21 @@ const slice = createSlice({
   name: "bugs",
   initialState: [
     {
-      name: "Marcooooooooooooo"
-    }
+      name: "Marcooooooooooooo",
+    },
   ],
   reducers: {
-    bugAdded: (bug, action) => {
+    bugAdded: (state, action) => {
       state.push({
         description: action.payload.description,
-        resolved: false
+        resolved: false,
       });
     },
     bugResolved: (state, action) => {
       const index = state.indexOf(action.payload.id);
       state[index].resolved = true;
-    }
-  }
+    },
+  },
 });
 
 export const { bugAdded, bugResolved } = slice.actions;

@@ -8,32 +8,37 @@ import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import AuthContext from "./../auth/context";
 import authStorage from "../auth/storage";
-import store from "../store";
+import { useDispatch, useSelector } from "react-redux";
 import ListingsNavigator from "./../navigation/ListingsNavigator";
+import { bugAdded } from "../store/listingsStore";
 
 const menuItems = [
   {
     title: "My Listings",
     icon: {
       name: "format-list-bulleted",
-      backgroundColor: colors.primary
-    }
+      backgroundColor: colors.primary,
+    },
   },
   {
     title: "My Messages",
     icon: {
       name: "email",
-      backgroundColor: colors.secondary
+      backgroundColor: colors.secondary,
     },
-    targetScreen: routes.MESSAGES
-  }
+    targetScreen: routes.MESSAGES,
+  },
 ];
 
 function AccountScreen({ navigation }) {
   const { token, setToken } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
-  let name = store.getState().ListingsNavigator;
-  console.log("name:", name);
+  let name = store.getState();
+  console.log("name:", name.listings);
+
+  dispatch(bugAdded({ description: "bug1" }));
+  console.log("bugAdded:", store.getState().listings);
 
   const handleLogout = () => {
     setToken(null);
@@ -51,7 +56,7 @@ function AccountScreen({ navigation }) {
       <View style={styles.container}>
         <FlatList
           data={menuItems}
-          keyExtractor={menuItem => menuItem.title}
+          keyExtractor={(menuItem) => menuItem.title}
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={({ item }) => (
             <ListItem
@@ -78,11 +83,11 @@ function AccountScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.light
+    backgroundColor: colors.light,
   },
   container: {
-    marginVertical: 20
-  }
+    marginVertical: 20,
+  },
 });
 
 export default AccountScreen;
