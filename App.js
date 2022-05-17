@@ -7,8 +7,10 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
+import { Provider } from "react-redux";
 import Card from "./app/components/Card";
 import ListingEditScreen from "./app/screens/ListingEditScreen";
+import Store from "./app/store";
 
 export default function App() {
   const [token, setToken] = useState();
@@ -32,12 +34,14 @@ export default function App() {
       />
     );
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
-      <NavigationContainer theme={navigationTheme}>
-        {token ? <AppNavigator /> : <AuthNavigator />}
-        {/* <AppNavigator /> */}
-        {/* {token ? <ListingEditScreen /> : <AuthNavigator />} */}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <Provider store={Store}>
+      <AuthContext.Provider value={{ token, setToken }}>
+        <NavigationContainer theme={navigationTheme}>
+          {token ? <AppNavigator /> : <AuthNavigator />}
+          {/* <AppNavigator /> */}
+          {/* {token ? <ListingEditScreen /> : <AuthNavigator />} */}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </Provider>
   );
 }
