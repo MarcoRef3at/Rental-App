@@ -79,6 +79,15 @@ function ListingEditScreen({ navigation }) {
     ...bedTypeInit,
   };
 
+  const handleSubmit = async (values) => {
+    try {
+      var result = await listingsApi.addListing(values);
+      console.log("result:", result.data);
+    } catch (error) {
+      console.log("error:", error);
+    }
+  };
+
   const [formValues, setFormValues] = useState(initialValues);
 
   const belongsToBedTypes = (name) =>
@@ -89,7 +98,8 @@ function ListingEditScreen({ navigation }) {
       <Form
         initialValues={initialValues}
         onSubmit={(values) => {
-          console.log("submit", values);
+          // console.log("submit", values);
+          handleSubmit(values);
           navigation.navigate(routes.LOCATION);
         }}
         validationSchema={validationSchema}

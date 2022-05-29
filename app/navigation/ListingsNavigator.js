@@ -12,6 +12,7 @@ import AvailabilityScreen from "./../screens/AvailabilityScreen";
 import CalendarScreen from "./../screens/CalendarScreen";
 import PriceScreen from "../screens/PriceScreen";
 import ReviewScreen from "./../screens/ReviewScreen";
+import FinishScreen from "./../screens/FinishScreen";
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ const ListingsNavigator = () => (
     <Stack.Screen name="Calendar" component={CalendarScreen} />
     <Stack.Screen name="Price" component={PriceScreen} />
     <Stack.Screen name="Review" component={ReviewScreen} />
+    <Stack.Screen name="Finish" component={FinishScreen} />
 
     <Stack.Screen name="Test" component={AppFormPicker} />
   </Stack.Navigator>
