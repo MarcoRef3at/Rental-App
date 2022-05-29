@@ -30,11 +30,13 @@ function ListItem({
               </Text>
             )}
           </View>
-          <MaterialCommunityIcons
-            color={colors.medium}
-            name="chevron-right"
-            size={25}
-          />
+          {onPress && (
+            <MaterialCommunityIcons
+              color={colors.medium}
+              name="chevron-right"
+              size={25}
+            />
+          )}
         </View>
       </TouchableHighlight>
     </Swipeable>
